@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace PlanetaryDeception
+﻿namespace PlanetaryDeception
 {
+    using System;
+
     public class ItemException : Exception
     {
         public ItemException(string AMessage, int AItemID) : base(AMessage + " (" + AItemID + ")")
@@ -36,5 +36,5 @@ namespace PlanetaryDeception
             ItemClass = AItemTag.ItemClass;
             ItemName = AItemTag.ItemName;
         }
-    };
+    }
 }
