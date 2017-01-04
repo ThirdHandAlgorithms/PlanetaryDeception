@@ -3,7 +3,7 @@
     /// <summary>
     /// Player Inventory.
     /// </summary>
-    class PlayerInventory : ItemInventory
+    public class PlayerInventory : ItemInventory
     {
         /// <summary>
         /// Singleton instance.

@@ -42,7 +42,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="destinationInventory"></param>
-        public void TransferItem(int itemId, ItemInventory destinationInventory)
+        public override void TransferItem(int itemId, ItemInventory destinationInventory)
         {
             var item = Peek(itemId);
             destinationInventory.Add(item);
