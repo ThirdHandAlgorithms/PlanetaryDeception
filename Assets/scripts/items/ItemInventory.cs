@@ -78,7 +78,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="destinationInventory"></param>
-        public void TransferItem(int itemId, ItemInventory destinationInventory)
+        public virtual void TransferItem(int itemId, ItemInventory destinationInventory)
         {
             var item = Pull(itemId);
             destinationInventory.Add(item);

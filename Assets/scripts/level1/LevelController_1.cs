@@ -1,31 +1,39 @@
-﻿using PlanetaryDeception;
-using UnityEngine;
-using UnityEngine.UI;
+﻿namespace PlanetaryDeception
+{
+    using UnityEngine;
+    using UnityEngine.UI;
 
-public class LevelController_1 : MonoBehaviour {
-    public Text alertText;
+    /// <summary>
+    /// Level 1
+    /// </summary>
+    public class LevelController_1 : MonoBehaviour
+    {
+        /// <summary>
+        /// Connect to Text gameobject in Unity
+        /// </summary>
+        public Text AlertText;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        var Inventory = PlayerInventory.Instance();
-
-        if (Input.anyKey)
+        /// <summary>
+        /// Update Event handler
+        /// </summary>
+        public void Update()
         {
-            if (!Inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+            // note: this is test code
+            var inventory = PlayerInventory.Instance();
+
+            if (Input.anyKey)
             {
-                var KnownItems = KnownItemsInventory.Instance();
-                KnownItems.TransferItem(KnownItemsInventory.BubbleGumWrappingPaper, Inventory);
+                if (!inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+                {
+                    var knownItems = KnownItemsInventory.Instance();
+                    knownItems.TransferItem(KnownItemsInventory.BubbleGumWrappingPaper, inventory);
+                }
             }
-        }
 
-        if (Inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
-        {
-            alertText.text = "You have BubbleGumWrappingPaper";
+            if (inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+            {
+                AlertText.text = "You have BubbleGumWrappingPaper";
+            }
         }
     }
 }
