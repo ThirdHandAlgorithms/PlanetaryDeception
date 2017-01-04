@@ -1,27 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PlanetaryDeception
+﻿namespace PlanetaryDeception
 {
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Item Inventory.
+    /// </summary>
     public class ItemInventory
     {
-        protected List<ItemTag> Items;
+        /// <summary>
+        /// Inventory items list.
+        /// </summary>
+        private List<ItemTag> items;
 
+        /// <summary>
+        /// Item Inventory.
+        /// </summary>
         public ItemInventory()
         {
-            Items = new List<ItemTag>();
+            items = new List<ItemTag>();
         }
 
         /// <summary>
-        /// Checks if an Item is in the Inventory (by Item ID)
+        /// Gets or Sets Items.
         /// </summary>
-        /// <param name="AItemID"></param>
-        /// <returns>bool</returns>
-        public bool ContainsItem(int AItemID)
+        protected List<ItemTag> Items
         {
-            foreach (var Item in Items)
+            get
             {
-                if (Item.ItemID == AItemID)
+                return items;
+            }
+
+            set
+            {
+                items = value;
+            }
+        }
+
+        /// <summary>
+        /// Checks if an Item is in the Inventory (by Item ID).
+        /// </summary>
+        /// <param name="itemId">Item ID</param>
+        /// <returns>bool</returns>
+        public bool ContainsItem(int itemId)
+        {
+            foreach (var item in items)
+            {
+                if (item.ItemID == itemId)
                 {
                     return true;
                 }
@@ -31,60 +55,60 @@ namespace PlanetaryDeception
         }
 
         /// <summary>
-        /// Gets the ItemTag for a given ItemID if it's in the Inventory, otherwise null is returned
-        /// </summary>
-        /// <param name="AItemID"></param>
-        /// <returns>null|ItemTag</returns>
-        protected ItemTag Peek(int AItemID)
-        {
-            foreach (var Item in Items)
-            {
-                if (Item.ItemID == AItemID)
-                {
-                    return Item;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Pulls an Item out of the Inventory, returns the retreived Item.
         /// If the Item is not in the Inventory, an exception is thrown.
         /// </summary>
-        /// <param name="AItemID"></param>
+        /// <param name="itemId"></param>
         /// <returns>ItemTag</returns>
-        public ItemTag Pull(int AItemID)
+        public ItemTag Pull(int itemId)
         {
-            var Item = Peek(AItemID);
-            if (Item == null)
+            var item = Peek(itemId);
+            if (item == null)
             {
-                throw new ItemException("Yo, something's wrong", AItemID);
+                throw new ItemException("Yo, something's wrong", itemId);
             }
 
-            Items.Remove(Item);
+            items.Remove(item);
 
-            return Item;
+            return item;
         }
 
         /// <summary>
         /// Transfers an Item from this inventory to another one
         /// </summary>
-        /// <param name="AItemID"></param>
-        /// <param name="ADestinationInventory"></param>
-        public void TransferItem(int AItemID, ItemInventory ADestinationInventory)
+        /// <param name="itemId"></param>
+        /// <param name="destinationInventory"></param>
+        public void TransferItem(int itemId, ItemInventory destinationInventory)
         {
-            var Item = Pull(AItemID);
-            ADestinationInventory.Add(Item);
+            var item = Pull(itemId);
+            destinationInventory.Add(item);
         }
 
         /// <summary>
         /// Adds an existing Item to the Inventory
         /// </summary>
-        /// <param name="AItem"></param>
-        public void Add(ItemTag AItem)
+        /// <param name="itemTag"></param>
+        public void Add(ItemTag itemTag)
         {
-            Items.Add(AItem);
+            items.Add(itemTag);
         }
-    };
+
+        /// <summary>
+        /// Gets the ItemTag for a given ItemID if it's in the Inventory, otherwise null is returned
+        /// </summary>
+        /// <param name="itemId">int</param>
+        /// <returns>null|ItemTag</returns>
+        protected ItemTag Peek(int itemId)
+        {
+            foreach (var item in Items)
+            {
+                if (item.ItemID == itemId)
+                {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+    }
 }

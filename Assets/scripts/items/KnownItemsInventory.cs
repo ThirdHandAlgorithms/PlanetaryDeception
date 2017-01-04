@@ -1,37 +1,51 @@
-﻿using System;
-
-namespace PlanetaryDeception
+﻿namespace PlanetaryDeception
 {
-    class KnownItemsInventory: ItemInventory
+    /// <summary>
+    /// Known Items Inventory.
+    /// </summary>
+    public class KnownItemsInventory : ItemInventory
     {
-        private static KnownItemsInventory ThisInstance = null;
-
+        /// <summary>
+        /// I'm here to kick ass and chew bubblegum, and I got 1 BubbleGumWrappingPaper.
+        /// </summary>
         public const int BubbleGumWrappingPaper = 1;
 
+        /// <summary>
+        /// Singleton Instance.
+        /// </summary>
+        private static KnownItemsInventory thisInstance = null;
+
+        /// <summary>
+        /// Known Items Inventory.
+        /// </summary>
         public KnownItemsInventory()
         {
             Add(new ItemTag(BubbleGumWrappingPaper, ItemClassType.Trash, "Bubble gum wrapping paper"));
         }
 
+        /// <summary>
+        /// Singleton.
+        /// </summary>
+        /// <returns>Instance of KnownItemsInventory</returns>
         public static KnownItemsInventory Instance()
         {
-            if (ThisInstance == null)
+            if (thisInstance == null)
             {
-                ThisInstance = new KnownItemsInventory();
+                thisInstance = new KnownItemsInventory();
             }
 
-            return ThisInstance;
+            return thisInstance;
         }
 
         /// <summary>
         /// Transfers an Item from this inventory to another one
         /// </summary>
-        /// <param name="AItemID"></param>
-        /// <param name="ADestinationInventory"></param>
-        public void TransferItem(int AItemID, ItemInventory ADestinationInventory)
+        /// <param name="itemId"></param>
+        /// <param name="destinationInventory"></param>
+        public void TransferItem(int itemId, ItemInventory destinationInventory)
         {
-            var Item = Peek(AItemID);
-            ADestinationInventory.Add(Item);
+            var item = Peek(itemId);
+            destinationInventory.Add(item);
         }
-    };
+    }
 }

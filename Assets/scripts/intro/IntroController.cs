@@ -1,20 +1,23 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
-/// <summary>
-/// Intro Controller.
-/// Does nothing for now, just waits for key input to launch the game.
-/// </summary>
-public class IntroController : MonoBehaviour
+﻿namespace PlanetaryDeception
 {
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+
     /// <summary>
-    /// Update this instance. Press any key..
+    /// Intro Controller.
+    /// Does nothing for now, just waits for key input to launch the game.
     /// </summary>
-    public void Update()
+    public class IntroController : MonoBehaviour
     {
-        if (Input.anyKey)
+        /// <summary>
+        /// Update this instance. Press any key..
+        /// </summary>
+        public void Update()
         {
-            SceneManager.LoadScene("Level_1");
+            if (Input.anyKey)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
         }
     }
 }

@@ -1,20 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PlanetaryDeception
+﻿namespace PlanetaryDeception
 {
+    /// <summary>
+    /// Player Inventory.
+    /// </summary>
     class PlayerInventory : ItemInventory
     {
-        private static PlayerInventory ThisInstance = null;
+        /// <summary>
+        /// Singleton instance.
+        /// </summary>
+        private static PlayerInventory thisInstance = null;
 
+        /// <summary>
+        /// Singleton Instance.
+        /// </summary>
+        /// <returns>Singleton of the Instance</returns>
         public static PlayerInventory Instance()
         {
-            if (ThisInstance == null)
+            if (thisInstance == null)
             {
-                ThisInstance = new PlayerInventory();
+                thisInstance = new PlayerInventory();
             }
 
-            return ThisInstance;
+            return thisInstance;
         }
-    };
+    }
 }
