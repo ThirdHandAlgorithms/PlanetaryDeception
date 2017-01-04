@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435effb9f2ffa6848b91b8a812230789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alertText: {fileID: 1429428144}
+  AlertText: {fileID: 1429428144}
 --- !u!4 &1119746872 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4420268989285598, guid: fab11c2667bf72e448cf758473ec5967,
