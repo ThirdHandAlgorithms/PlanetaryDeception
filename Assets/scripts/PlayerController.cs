@@ -72,7 +72,7 @@
         private void FlipCharacter()
         {
             CharacterFacingRight = !CharacterFacingRight;
-            spriteRenderer.flipX = CharacterFacingRight;
+            spriteRenderer.flipX = !CharacterFacingRight;
         }
     }
 }
