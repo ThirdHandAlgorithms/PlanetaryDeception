@@ -1,38 +1,43 @@
 ﻿namespace PlanetaryDeception
 {
     using UnityEngine;
+    using UnityEngine.SceneManagement;
     using UnityEngine.UI;
 
     /// <summary>
     /// Level 1
     /// </summary>
-    public class LevelController_1 : MonoBehaviour
+    public class LevelController_1 : LevelBase
     {
-        /// <summary>
-        /// Connect to Text gameobject in Unity
-        /// </summary>
-        public Text AlertText;
-
         /// <summary>
         /// Update Event handler
         /// </summary>
         public void Update()
         {
+            currentInstance = this;
+
             // note: this is test code
             var inventory = PlayerInventory.Instance();
 
-            if (Input.anyKey)
+            if (Input.GetButton("Fire1"))
             {
-                if (!inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+                if (PlayerIsTouching("Dressoir"))
                 {
-                    var knownItems = KnownItemsInventory.Instance();
-                    knownItems.TransferItem(KnownItemsInventory.BubbleGumWrappingPaper, inventory);
+                    if (!inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+                    {
+                        var knownItems = KnownItemsInventory.Instance();
+                        knownItems.TransferItem(KnownItemsInventory.BubbleGumWrappingPaper, inventory);
+                        AlertText.text = "You picked up BubbleGumWrappingPaper";
+                    }
                 }
-            }
-
-            if (inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
-            {
-                AlertText.text = "You have BubbleGumWrappingPaper";
+                else if (PlayerIsTouching("Console"))
+                {
+                    AlertText.text = "You have no access to this terminal";
+                }
+                else if (PlayerIsTouching("Door"))
+                {
+                    SceneManager.LoadScene("Level_2");
+                }
             }
         }
     }

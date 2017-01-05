@@ -46,8 +46,10 @@
         /// </summary>
         private void FixedUpdate()
         {
+            var horizontalAxis = Input.GetAxis("Horizontal");
+
             // Multiple Ifs since you can press multiple keys in the same frameupdate
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (horizontalAxis < 0)
             {
                 transform.position += Vector3.left * StandardSpeed * Time.deltaTime;
                 if (CharacterFacingRight)
@@ -56,7 +58,7 @@
                 }
             }
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (horizontalAxis > 0)
             {
                 transform.position += Vector3.right * StandardSpeed * Time.deltaTime;
                 if (!CharacterFacingRight)
