@@ -1,139 +1,231 @@
 ﻿namespace PlanetaryDeception
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
     using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
 
+    /// <summary>
+    /// SolarOS
+    /// </summary>
     public class SolarOS : LevelBase
     {
-        protected class SolarOSMenuItem
-        {
-            public string Description;
-            public bool Selected;
-
-            public SolarOSMenuItem(string description)
-            {
-                Description = description;
-                Selected = false;
-            }
-        }
-
+        /// <summary>
+        /// The Text field for the OS output
+        /// </summary>
         public Text ConsoleOutput;
 
+        /// <summary>
+        /// delay helper vars
+        /// </summary>
         protected float nextInputAllowed = 0.0F;
 
-        protected bool isInMenu;
+        /// <summary>
+        /// Current menu's menuitems
+        /// </summary>
         protected List<SolarOSMenuItem> menuItems;
-        protected SolarOSMenuItem previousMenuItem;
-        protected SolarOSMenuItem currentMenuItem;
 
+        /// <summary>
+        /// The previously opened menuitem
+        /// </summary>
+        protected SolarOSMenuItem previousApplication;
+
+        /// <summary>
+        /// The currently running application
+        /// </summary>
+        protected SolarOSMenuItem currentApplication;
+
+        /// <summary>
+        /// The current by the user selected menu item
+        /// </summary>
+        protected SolarOSMenuItem selectedMenuItem;
+
+        /// <summary>
+        /// Unity start
+        /// </summary>
         public void Start()
         {
-            previousMenuItem = null;
-            loadMainMenu();
+            previousApplication = null;
+            LoadMainMenu();
         }
 
-        protected virtual void loadMainMenu()
+        /// <summary>
+        /// Update
+        /// </summary>
+        public void Update()
         {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("social media"));
-            menuItems.Add(new SolarOSMenuItem("IOT devices"));
-            menuItems.Add(new SolarOSMenuItem("VPN to work"));
-            menuItems.Add(new SolarOSMenuItem("local tor"));
-            menuItems.Add(new SolarOSMenuItem("solarbits wallet"));
-
-            isInMenu = true;
-            previousMenuItem = null;
-        }
-
-        protected virtual void loadIOTDevices()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Application not installed"));
-            //menuItems.Add(new SolarOSMenuItem("front door lock"));
-            //menuItems.Add(new SolarOSMenuItem("front door camera"));
-            //menuItems.Add(new SolarOSMenuItem("air conditioning"));
-            //menuItems.Add(new SolarOSMenuItem("lights"));
-
-            isInMenu = true;
-        }
-
-        protected virtual void loadVPNToWork()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Application not installed"));
-            //menuItems.Add(new SolarOSMenuItem("GIT"));
-            //menuItems.Add(new SolarOSMenuItem("work orders"));
-
-            isInMenu = true;
-        }
-
-        protected virtual void loadSocialMedia()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Application not installed"));
-            //menuItems.Add(new SolarOSMenuItem("send direct message"));
-
-            isInMenu = true;
-        }
-
-        protected virtual void loadLocalTOR()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Application not installed"));
-
-            isInMenu = true;
-        }
-
-        protected virtual void loadSolarBitsWallet()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Account balance: 0 solarbits"));
-            //menuItems.Add(new SolarOSMenuItem("Transfer"));
-
-            isInMenu = true;
-        }
-
-        protected SolarOSMenuItem getSelectedMenuItem()
-        {
-            foreach (var menuItem in menuItems)
+            if (Time.time >= nextInputAllowed)
             {
-                if (menuItem.Selected)
+                var verticalAxis = Input.GetAxis("Vertical");
+
+                if (verticalAxis > 0)
                 {
-                    return menuItem;
+                    MoveSelectionUp();
+
+                    nextInputAllowed = Time.time + 0.2F;
+                }
+                else if (verticalAxis < 0)
+                {
+                    MoveSelectionDown();
+
+                    nextInputAllowed = Time.time + 0.2F;
+                }
+                else if (Input.GetButtonUp("Fire1"))
+                {
+                    var selected = GetSelectedMenuItem();
+                    if (selected != null)
+                    {
+                        RunMenuItem(selected);
+                    }
+                }
+                else if (Input.GetButtonUp("Fire2"))
+                {
+                    if ((previousApplication == null) && (currentApplication == null))
+                    {
+                        var currentScene = SceneManager.GetActiveScene();
+                        var currentSceneName = currentScene.name;
+                        SceneManager.LoadScene(currentSceneName.Substring(0, currentSceneName.Length - 1));
+                        return;
+                    }
+                    else
+                    {
+                        RunMenuItem(previousApplication);
+                    }
                 }
             }
 
-            return null;
-        }
-
-        protected void initSelection()
-        {
-            if ((menuItems != null) && (menuItems.Count > 0) && (getSelectedMenuItem() == null))
+            if (currentApplication == null)
             {
-                menuItems[0].Selected = true;
+                RefreshDisplay();
+            }
+            else
+            {
+                currentApplication.OnDisplay();
             }
         }
 
-        protected string osTxt()
+        /// <summary>
+        /// Main menu
+        /// </summary>
+        protected virtual void LoadMainMenu()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("social media", LoadApplicationNotInstalled, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("VPN to work", LoadApplicationNotInstalled, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("local tor", LoadApplicationNotInstalled, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("solarbits wallet", LoadSolarBitsWallet, RefreshDisplay));
+
+            previousApplication = null;
+        }
+
+        /// <summary>
+        /// Your home Internet Of Things devices
+        /// </summary>
+        protected virtual void LoadIOTDevices()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("front door lock", () => { }, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("front door camera", () => { }, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("air conditioning", () => { }, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("lights", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Work VPN application listing
+        /// </summary>
+        protected virtual void LoadVPNToWork()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("GIT", () => { }, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("work orders", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Twitter
+        /// </summary>
+        protected virtual void LoadSocialMedia()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("send direct message", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Default menu when an application is not installed
+        /// </summary>
+        protected virtual void LoadApplicationNotInstalled()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("Application not installed", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Loads the SolarBitsWallet application
+        /// </summary>
+        protected virtual void LoadSolarBitsWallet()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(new SolarOSMenuItem("Account balance: 0 solarbits", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Returns the selected menu item
+        /// </summary>
+        /// <returns>SolarOSMenuItem</returns>
+        protected SolarOSMenuItem GetSelectedMenuItem()
+        {
+            return selectedMenuItem;
+        }
+
+        /// <summary>
+        /// Menu has items?
+        /// </summary>
+        /// <returns>bool</returns>
+        protected bool HasItems()
+        {
+            return (menuItems != null) && (menuItems.Count > 0);
+        }
+
+        /// <summary>
+        /// Initialize selectedMenuItem for the current menu
+        /// </summary>
+        protected void InitSelection()
+        {
+            if (HasItems() && ((selectedMenuItem == null) || !menuItems.Contains(selectedMenuItem)))
+            {
+                selectedMenuItem = menuItems[0];
+            }
+        }
+
+        /// <summary>
+        /// Return OS header
+        /// </summary>
+        /// <returns>string</returns>
+        protected string OSTxt()
         {
             return "Solar OS V3.2\n\n";
         }
 
-        protected string menuTxt()
+        /// <summary>
+        /// Return menu header
+        /// </summary>
+        /// <returns>string</returns>
+        protected string MenuTxt()
         {
             return "Available functions:\n";
         }
 
-        protected string menuOptionsTxt()
+        /// <summary>
+        /// Returns MenuOptions as a string
+        /// </summary>
+        /// <returns>string</returns>
+        protected string MenuOptionsTxt()
         {
-            string menuOptions = "";
+            string menuOptions = string.Empty;
 
             foreach (var menuItem in menuItems)
             {
-                if (menuItem.Selected)
+                if (menuItem == selectedMenuItem)
                 {
                     menuOptions += "[x]";
                 }
@@ -148,126 +240,67 @@
             return menuOptions;
         }
 
+        /// <summary>
+        /// General refresh function
+        /// </summary>
         protected virtual void RefreshDisplay()
         {
-            if (isInMenu)
-            {
-                initSelection();
+            InitSelection();
 
-                ConsoleOutput.text =
-                    osTxt() +
-                    menuTxt() +
-                    menuOptionsTxt();
-            }
-            else
-            {
-                ConsoleOutput.text =
-                    osTxt();
-            }
+            ConsoleOutput.text =
+                OSTxt() +
+                MenuTxt() +
+                MenuOptionsTxt();
         }
 
-        protected void moveSelectionUp()
+        /// <summary>
+        /// Go up a menuitem
+        /// </summary>
+        protected void MoveSelectionUp()
         {
-            var currentSelection = getSelectedMenuItem();
+            var currentSelection = GetSelectedMenuItem();
             if (currentSelection != null)
             {
                 var itemIndex = menuItems.IndexOf(currentSelection);
                 if (itemIndex > 0)
                 {
-                    currentSelection.Selected = false;
-                    menuItems[itemIndex - 1].Selected = true;
+                    selectedMenuItem = menuItems[itemIndex - 1];
                 }
             }
         }
 
-        protected void moveSelectionDown()
+        /// <summary>
+        /// Go down a menuitem
+        /// </summary>
+        protected void MoveSelectionDown()
         {
-            var currentSelection = getSelectedMenuItem();
+            var currentSelection = GetSelectedMenuItem();
             if (currentSelection != null)
             {
                 var itemIndex = menuItems.IndexOf(currentSelection);
                 if (itemIndex < menuItems.Count - 1)
                 {
-                    currentSelection.Selected = false;
-                    menuItems[itemIndex + 1].Selected = true;
+                    selectedMenuItem = menuItems[itemIndex + 1];
                 }
             }
         }
 
-        protected virtual void runMenuItem(SolarOSMenuItem menuItem)
+        /// <summary>
+        /// Executes the function connected to the given MenuItem
+        /// </summary>
+        /// <param name="menuItem"></param>
+        protected virtual void RunMenuItem(SolarOSMenuItem menuItem)
         {
-            currentMenuItem = menuItem;
+            currentApplication = menuItem;
 
             if (menuItem == null)
             {
-                loadMainMenu();
+                LoadMainMenu();
             }
             else
             {
-                if (menuItem.Description == "social media")
-                {
-                    loadSocialMedia();
-                }
-                else if (menuItem.Description == "IOT devices")
-                {
-                    loadIOTDevices();
-                }
-                else if (menuItem.Description == "VPN to work")
-                {
-                    loadVPNToWork();
-                }
-                else if (menuItem.Description == "local tor")
-                {
-                    loadLocalTOR();
-                }
-                else if (menuItem.Description == "solarbits wallet")
-                {
-                    loadSolarBitsWallet();
-                }
+                menuItem.OnRunApplication();
             }
-        }
-
-        public void Update()
-        {
-            if (Time.time >= nextInputAllowed)
-            {
-                var verticalAxis = Input.GetAxis("Vertical");
-
-                if (verticalAxis > 0)
-                {
-                    moveSelectionUp();
-
-                    nextInputAllowed = Time.time + 0.2F;
-                }
-                else if (verticalAxis < 0)
-                {
-                    moveSelectionDown();
-
-                    nextInputAllowed = Time.time + 0.2F;
-                }
-                else if (Input.GetButtonUp("Fire1"))
-                {
-                    var selected = getSelectedMenuItem();
-                    if (selected != null)
-                        runMenuItem(selected);
-                }
-                else if (Input.GetButtonUp("Fire2"))
-                {
-                    if ((previousMenuItem == null) && (currentMenuItem == null))
-                    {
-                        var currentScene = SceneManager.GetActiveScene();
-                        var currentSceneName = currentScene.name;
-                        SceneManager.LoadScene(currentSceneName.Substring(0, currentSceneName.Length - 1));
-                        return;
-                    }
-                    else
-                    {
-                        runMenuItem(previousMenuItem);
-                    }
-                }
-            }
-
-            RefreshDisplay();
         }
     }
 }
