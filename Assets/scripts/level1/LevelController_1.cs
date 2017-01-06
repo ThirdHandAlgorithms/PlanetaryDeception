@@ -32,7 +32,14 @@
                 }
                 else if (PlayerIsTouching("Console"))
                 {
-                    AlertText.text = "You have no access to this terminal";
+                    if (!inventory.ContainsItem(KnownItemsInventory.BubbleGumWrappingPaper))
+                    {
+                        AlertText.text = "You have no access to this terminal";
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("Level_1a");
+                    }
                 }
                 else if (PlayerIsTouching("Door"))
                 {
