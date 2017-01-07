@@ -1,0 +1,68 @@
+﻿namespace VCC
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Runtime.Serialization.Json;
+    using System.Text;
+
+    public class VoasisAPI
+    {
+        private const string urlAPI = "https://api.voasis.venus/info.json";
+        private const string urlParameters = "";
+        private string username;
+        private string password;
+
+        public class VoasisAPIDomeInfo
+        {
+            public string Id;
+            public float O2Capacity;
+            public float O2Amount;
+            public float CO2Capacity;
+            public float CO2Amount;
+        }
+
+        public class VoasisAPIInfo
+        {
+            public string StatusDescription;
+
+            public List<VoasisAPIDomeInfo> Domes;
+        }
+
+        public VoasisAPI()
+        {
+            // todo: use parameters
+            username = "admin";
+            password = "fivecurioustales23";
+        }
+
+        public VoasisAPIInfo GetInfo()
+        {
+            VoasisAPIInfo info = null;
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(urlAPI);
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var authenticationData = Encoding.ASCII.GetBytes(username + ":" + password);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authenticationData));
+
+            HttpResponseMessage response = client.GetAsync(urlParameters).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStreamAsync().Result;
+
+                var deserializer = new DataContractJsonSerializer(typeof(VoasisAPIInfo));
+                info = (VoasisAPIInfo)deserializer.ReadObject(content);
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase + " (" + (int)response.StatusCode + ")");
+            }
+
+            return info;
+        }
+    }
+}
