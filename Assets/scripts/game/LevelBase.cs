@@ -2,7 +2,6 @@
 {
     using UnityEngine;
     using UnityEngine.UI;
-    using UnityEngine.SceneManagement;
 
     /// <summary>
     /// Base class for Level controllers
