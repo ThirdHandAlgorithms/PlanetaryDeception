@@ -1,5 +1,6 @@
 ﻿namespace PlanetaryDeception
 {
+    using System;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.SceneManagement;
@@ -16,6 +17,11 @@
         public Text ConsoleOutput;
 
         /// <summary>
+        /// Current Network the console is connected to
+        /// </summary>
+        public SolarOSNetwork Network;
+
+        /// <summary>
         /// delay helper vars
         /// </summary>
         protected float nextInputAllowed = 0.0F;
@@ -26,9 +32,9 @@
         protected List<SolarOSMenuItem> menuItems;
 
         /// <summary>
-        /// The previously opened menuitem
+        /// Breadcrumb path
         /// </summary>
-        protected SolarOSMenuItem previousApplication;
+        protected List<SolarOSMenuItem> breadCrumbs;
 
         /// <summary>
         /// The currently running application
@@ -41,11 +47,24 @@
         protected SolarOSMenuItem selectedMenuItem;
 
         /// <summary>
+        /// Possible Networks
+        /// </summary>
+        public enum SolarOSNetwork
+        {
+            Space = 0,
+            Venus = 1,
+            EarthMoon = 2,
+            Mars = 3,
+            Ceres = 4,
+            Europa = 5
+        }
+
+        /// <summary>
         /// Unity start
         /// </summary>
         public void Start()
         {
-            previousApplication = null;
+            breadCrumbs = new List<SolarOSMenuItem>();
             LoadMainMenu();
         }
 
@@ -80,7 +99,8 @@
                 }
                 else if (Input.GetButtonUp("Fire2"))
                 {
-                    if ((previousApplication == null) && (currentApplication == null))
+                    var lastBreadcrumb = PopPreviousApplicationBreadcrumb();
+                    if ((lastBreadcrumb == null) && (currentApplication == null))
                     {
                         var currentScene = SceneManager.GetActiveScene();
                         var currentSceneName = currentScene.name;
@@ -89,7 +109,7 @@
                     }
                     else
                     {
-                        RunMenuItem(previousApplication);
+                        RunMenuItemWithoutAddingToBreadcrumbs(lastBreadcrumb);
                     }
                 }
             }
@@ -98,9 +118,29 @@
             {
                 RefreshDisplay();
             }
-            else
+            else if (currentApplication.OnDisplay != null)
             {
                 currentApplication.OnDisplay();
+            }
+        }
+
+        /// <summary>
+        /// Returns the latest breadcrumb
+        /// </summary>
+        /// <returns>SolarOSMenuItem</returns>
+        protected SolarOSMenuItem PopPreviousApplicationBreadcrumb()
+        {
+            if (breadCrumbs.Count > 0)
+            {
+                var idx = breadCrumbs.Count - 1;
+                var item = breadCrumbs[idx];
+                breadCrumbs.RemoveAt(idx);
+
+                return item;
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -110,13 +150,34 @@
         protected virtual void LoadMainMenu()
         {
             menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("social media", LoadApplicationNotInstalled, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("VPN to work", LoadApplicationNotInstalled, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("local tor", LoadApplicationNotInstalled, RefreshDisplay));
+            if (Network != SolarOSNetwork.Space)
+            {
+                menuItems.Add(new SolarOSMenuItem("social media", LoadApplicationNotInstalled, RefreshDisplay));
+                if (Network == SolarOSNetwork.Venus)
+                {
+                    menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
+                    menuItems.Add(new SolarOSMenuItem("VPN to work", LoadVPNToWork, RefreshDisplay));
+                }
+                menuItems.Add(new SolarOSMenuItem("local tor", LoadApplicationNotInstalled, RefreshDisplay));
+            }
             menuItems.Add(new SolarOSMenuItem("solarbits wallet", LoadSolarBitsWallet, RefreshDisplay));
+        }
 
-            previousApplication = null;
+        /// <summary>
+        /// Loads a textfile from the resources as a menu
+        /// </summary>
+        protected void LoadTextFileAsMenu(string resourceName)
+        {
+            menuItems = new List<SolarOSMenuItem>();
+
+            var scriptText = Resources.Load(resourceName) as TextAsset;
+            var stringSeparators = new string[] { "\r\n", "\r", "\n" };
+            var result = scriptText.text.Split(stringSeparators, StringSplitOptions.None);
+
+            foreach (var line in result)
+            {
+                menuItems.Add(new SolarOSMenuItem(line.ToLower(), null, null));
+            }
         }
 
         /// <summary>
@@ -132,12 +193,28 @@
         }
 
         /// <summary>
+        /// Load Work GIT
+        /// </summary>
+        protected virtual void LoadWorkGIT()
+        {
+            menuItems = new List<SolarOSMenuItem>();
+            menuItems.Add(
+                new SolarOSMenuItem(
+                    "latest code review request",
+                    () =>
+                    {
+                        LoadTextFileAsMenu("VoasisAPI");
+                    },
+                    RefreshDisplayGITCodeReview));
+        }
+
+        /// <summary>
         /// Work VPN application listing
         /// </summary>
         protected virtual void LoadVPNToWork()
         {
             menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("GIT", () => { }, RefreshDisplay));
+            menuItems.Add(new SolarOSMenuItem("GIT", LoadWorkGIT, RefreshDisplay));
             menuItems.Add(new SolarOSMenuItem("work orders", () => { }, RefreshDisplay));
         }
 
@@ -175,6 +252,18 @@
         protected SolarOSMenuItem GetSelectedMenuItem()
         {
             return selectedMenuItem;
+        }
+
+        /// <summary>
+        /// Appends a breadcrumb
+        /// </summary>
+        /// <param name="menuItem">SolarOSMenuItem</param>
+        protected void AddBreadCrumb(SolarOSMenuItem menuItem)
+        {
+            if (!breadCrumbs.Contains(menuItem))
+            {
+                breadCrumbs.Add(menuItem);
+            }
         }
 
         /// <summary>
@@ -254,6 +343,19 @@
         }
 
         /// <summary>
+        /// GIT code review request
+        /// </summary>
+        protected virtual void RefreshDisplayGITCodeReview()
+        {
+            InitSelection();
+
+            ConsoleOutput.text =
+                OSTxt() +
+                "1 file to review:\n" +
+                MenuOptionsTxt();
+        }
+
+        /// <summary>
         /// Go up a menuitem
         /// </summary>
         protected void MoveSelectionUp()
@@ -289,18 +391,29 @@
         /// Executes the function connected to the given MenuItem
         /// </summary>
         /// <param name="menuItem"></param>
-        protected virtual void RunMenuItem(SolarOSMenuItem menuItem)
+        protected virtual void RunMenuItemWithoutAddingToBreadcrumbs(SolarOSMenuItem menuItem)
         {
-            currentApplication = menuItem;
+            if ((menuItem != null) && (menuItem.OnRunApplication != null))
+            {
+                currentApplication = menuItem;
 
-            if (menuItem == null)
+                menuItem.OnRunApplication();
+            }
+            else if (menuItem == null)
             {
                 LoadMainMenu();
             }
-            else
-            {
-                menuItem.OnRunApplication();
-            }
+        }
+
+        /// <summary>
+        /// Executes the function connected to the given MenuItem
+        /// </summary>
+        /// <param name="menuItem"></param>
+        protected virtual void RunMenuItem(SolarOSMenuItem menuItem)
+        {
+            AddBreadCrumb(currentApplication);
+
+            RunMenuItemWithoutAddingToBreadcrumbs(menuItem);
         }
     }
 }
