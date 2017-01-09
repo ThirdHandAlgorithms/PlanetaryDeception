@@ -158,14 +158,17 @@
                     menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
                     menuItems.Add(new SolarOSMenuItem("VPN to work", LoadVPNToWork, RefreshDisplay));
                 }
+
                 menuItems.Add(new SolarOSMenuItem("local tor", LoadApplicationNotInstalled, RefreshDisplay));
             }
+
             menuItems.Add(new SolarOSMenuItem("solarbits wallet", LoadSolarBitsWallet, RefreshDisplay));
         }
 
         /// <summary>
         /// Loads a textfile from the resources as a menu
         /// </summary>
+        /// <param name="resourceName">string</param>
         protected void LoadTextFileAsMenu(string resourceName)
         {
             menuItems = new List<SolarOSMenuItem>();

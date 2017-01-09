@@ -3,30 +3,72 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
     using UnityEngine.SceneManagement;
+    using UnityEngine.UI;
 
-    public class CharacterCreateInput: MonoBehaviour
+    /// <summary>
+    /// Character creation screen control input
+    /// </summary>
+    public class CharacterCreateInput : MonoBehaviour
     {
+        /// <summary>
+        /// Hair sprite
+        /// </summary>
         public SpriteRenderer HairPreview;
+
+        /// <summary>
+        /// Outfit sprite
+        /// </summary>
         public SpriteRenderer OutfitPreview;
+
+        /// <summary>
+        /// Accessory sprite
+        /// </summary>
         public SpriteRenderer AccessoryPreview;
 
+        /// <summary>
+        /// List of text controls
+        /// </summary>
         private List<Text> controls;
+
+        /// <summary>
+        /// Current active control
+        /// </summary>
         private Text currentControl;
+
+        /// <summary>
+        /// When the control/keyb input is allowed
+        /// </summary>
         private float nextInputAllowed = 0.0f;
 
+        /// <summary>
+        /// List of sprite resources with hairstyles
+        /// </summary>
         private Sprite[] allHairStyles;
+
+        /// <summary>
+        /// List of sprite resources with accessories
+        /// </summary>
         private Sprite[] allAccessories;
+
+        /// <summary>
+        /// List of sprite resources with outfits
+        /// </summary>
         private Sprite[] allOutfits;
+
+        /// <summary>
+        /// List of hair colors
+        /// </summary>
         private List<Color> possibleHairColors;
+
+        /// <summary>
+        /// List of accessory colors
+        /// </summary>
         private List<Color> possibleAccessoryColors;
 
-        private Color New255Color(byte r, byte g, byte b)
-        {
-            return new Color(r/255.0f, g/255.0f, b/255.0f);
-        }
-
+        /// <summary>
+        /// Start
+        /// </summary>
         public void Start()
         {
             allHairStyles = Resources.LoadAll<Sprite>("Sprites/hair_styles");
@@ -70,24 +112,9 @@
             currentControl = controls[0];
         }
 
-        private void SaveCharacterSettings()
-        {
-            var settings = CharacterSettings.Instance();
-
-            settings.HairStyle = GetNumberFromSpriteName(HairPreview.sprite.name);
-            settings.HairColor = HairPreview.color;
-
-            settings.Accessory = GetNumberFromSpriteName(AccessoryPreview.sprite.name);
-            settings.AccessoryColor = AccessoryPreview.color;
-
-            settings.Outfit = GetNumberFromSpriteName(OutfitPreview.sprite.name);
-        }
-
-        private int GetNumberFromSpriteName(string spriteName)
-        {
-            return int.Parse(spriteName.Split('_')[2]);
-        }
-
+        /// <summary>
+        /// Update
+        /// </summary>
         public void Update()
         {
             currentControl.color = Color.red;
@@ -242,6 +269,44 @@
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Color from base-255 to floatbase color
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
+        /// <returns>Color</returns>
+        private Color New255Color(byte r, byte g, byte b)
+        {
+            return new Color(r / 255.0f, g / 255.0f, b / 255.0f);
+        }
+
+        /// <summary>
+        /// Save
+        /// </summary>
+        private void SaveCharacterSettings()
+        {
+            var settings = CharacterSettings.Instance();
+
+            settings.HairStyle = GetNumberFromSpriteName(HairPreview.sprite.name);
+            settings.HairColor = HairPreview.color;
+
+            settings.Accessory = GetNumberFromSpriteName(AccessoryPreview.sprite.name);
+            settings.AccessoryColor = AccessoryPreview.color;
+
+            settings.Outfit = GetNumberFromSpriteName(OutfitPreview.sprite.name);
+        }
+
+        /// <summary>
+        /// Extract number from spritename
+        /// </summary>
+        /// <param name="spriteName"></param>
+        /// <returns>int</returns>
+        private int GetNumberFromSpriteName(string spriteName)
+        {
+            return int.Parse(spriteName.Split('_')[2]);
         }
     }
 }

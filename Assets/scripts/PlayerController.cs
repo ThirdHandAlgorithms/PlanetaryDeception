@@ -28,8 +28,19 @@
         /// </summary>
         public float StandardSpeed = 2;
 
+        /// <summary>
+        /// Select sprite with the Player's Outfit
+        /// </summary>
         public SpriteRenderer OutfitSprite;
+
+        /// <summary>
+        /// Sprite for the Player's Hair
+        /// </summary>
         public SpriteRenderer HairSprite;
+
+        /// <summary>
+        /// Sprite for the Player's Accessory
+        /// </summary>
         public SpriteRenderer AccessorySprite;
 
         /// <summary>

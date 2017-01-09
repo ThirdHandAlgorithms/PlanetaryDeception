@@ -2,17 +2,49 @@
 {
     using UnityEngine;
 
+    /// <summary>
+    /// CharacterSettings
+    /// </summary>
     public class CharacterSettings
     {
-        private static CharacterSettings thisInstance = null;
-
+        /// <summary>
+        /// Character Name
+        /// </summary>
         public string Name;
+
+        /// <summary>
+        /// HairStyle number
+        /// </summary>
         public int HairStyle;
+
+        /// <summary>
+        /// Accessory number
+        /// </summary>
         public int Accessory;
+
+        /// <summary>
+        /// Outfit number
+        /// </summary>
         public int Outfit;
+
+        /// <summary>
+        /// Hair color
+        /// </summary>
         public Color HairColor;
+
+        /// <summary>
+        /// Accessory color
+        /// </summary>
         public Color AccessoryColor;
 
+        /// <summary>
+        /// Singleton var
+        /// </summary>
+        private static CharacterSettings thisInstance = null;
+
+        /// <summary>
+        /// Le Constructeur
+        /// </summary>
         public CharacterSettings()
         {
             Name = "Player";
@@ -23,6 +55,10 @@
             AccessoryColor = Color.black;
         }
 
+        /// <summary>
+        /// Singleton
+        /// </summary>
+        /// <returns>CharacterSettings</returns>
         public static CharacterSettings Instance()
         {
             if (thisInstance == null)
