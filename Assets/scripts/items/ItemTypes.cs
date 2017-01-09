@@ -8,7 +8,8 @@
         Trash = 0,
         Identification = 1,
         ProjectileWeapon = 2,
-        ParticleWeapon = 3
+        ParticleWeapon = 3,
+        HiddenIOTControl = 4
     }
 
     /// <summary>

@@ -94,6 +94,22 @@
         }
 
         /// <summary>
+        /// Gets name of item
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns>string</returns>
+        public string GetName(int itemId)
+        {
+            var item = Peek(itemId);
+            if (item == null)
+            {
+                throw new ItemException("Yo, something's wrong", itemId);
+            }
+
+            return item.ItemName;
+        }
+
+        /// <summary>
         /// Gets the ItemTag for a given ItemID if it's in the Inventory, otherwise null is returned
         /// </summary>
         /// <param name="itemId">int</param>

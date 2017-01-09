@@ -6,9 +6,14 @@
     public class KnownItemsInventory : ItemInventory
     {
         /// <summary>
-        /// I'm here to kick ass and chew bubblegum, and I got 1 BubbleGumWrappingPaper.
+        /// Personal access card to terminals
         /// </summary>
-        public const int BubbleGumWrappingPaper = 1;
+        public const int PlayerSecurityAccessCard = 1;
+
+        /// <summary>
+        /// Hidden lock control
+        /// </summary>
+        public const int IOTVenusHouseLockControl = 2;
 
         /// <summary>
         /// Singleton Instance.
@@ -20,7 +25,8 @@
         /// </summary>
         public KnownItemsInventory()
         {
-            Add(new ItemTag(BubbleGumWrappingPaper, ItemClassType.Trash, "Bubble gum wrapping paper"));
+            Add(new ItemTag(PlayerSecurityAccessCard, ItemClassType.Identification, "Security access card"));
+            Add(new ItemTag(IOTVenusHouseLockControl, ItemClassType.HiddenIOTControl, string.Empty));
         }
 
         /// <summary>

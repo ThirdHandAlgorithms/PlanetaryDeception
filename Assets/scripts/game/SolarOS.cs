@@ -52,11 +52,18 @@
         public enum SolarOSNetwork
         {
             Space = 0,
+
             Venus = 1,
-            EarthMoon = 2,
-            Mars = 3,
-            Ceres = 4,
-            Europa = 5
+            VenusHome = 3,
+            Venref = 5,
+
+            EarthMoon = 8,
+
+            Mars = 16,
+
+            Ceres = 24,
+
+            Europa = 32
         }
 
         /// <summary>
@@ -153,9 +160,13 @@
             if (Network != SolarOSNetwork.Space)
             {
                 menuItems.Add(new SolarOSMenuItem("social media", LoadApplicationNotInstalled, RefreshDisplay));
-                if (Network == SolarOSNetwork.Venus)
+                if ((Network == SolarOSNetwork.VenusHome) || (Network == SolarOSNetwork.Venref))
                 {
-                    menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
+                    menuItems.Add(new SolarOSMenuItem("IOT devices", LoadIOTDevices, RefreshDisplay));
+                }
+
+                if ((Network & SolarOSNetwork.Venus) > 0)
+                {
                     menuItems.Add(new SolarOSMenuItem("VPN to work", LoadVPNToWork, RefreshDisplay));
                 }
 
@@ -189,10 +200,41 @@
         protected virtual void LoadIOTDevices()
         {
             menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("front door lock", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("front door camera", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("air conditioning", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("lights", () => { }, RefreshDisplay));
+
+            var inv = PlayerInventory.Instance();
+
+            // todo: make a separate class for IOT control, this code is getting silly
+            if (Network == SolarOSNetwork.VenusHome)
+            {
+                string frontDoorLockText;
+                if (inv.ContainsItem(KnownItemsInventory.IOTVenusHouseLockControl))
+                {
+                    frontDoorLockText = "lock front door";
+                }
+                else
+                {
+                    frontDoorLockText = "unlock front door";
+                }
+
+                menuItems.Add(new SolarOSMenuItem(
+                    frontDoorLockText,
+                    () =>
+                    {
+                        if (inv.ContainsItem(KnownItemsInventory.IOTVenusHouseLockControl))
+                        {
+                            inv.Pull(KnownItemsInventory.IOTVenusHouseLockControl);
+                            menuItems[0].Description = "unlock front door";
+                        }
+                        else
+                        {
+                            KnownItemsInventory.Instance().TransferItem(KnownItemsInventory.IOTVenusHouseLockControl, inv);
+                            menuItems[0].Description = "lock front door";
+                        }
+
+                        PopPreviousApplicationBreadcrumb();
+                    },
+                    RefreshDisplay));
+            }
         }
 
         /// <summary>
