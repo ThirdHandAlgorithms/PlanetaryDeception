@@ -29,6 +29,11 @@
         public float StandardSpeed = 2;
 
         /// <summary>
+        /// Player sprite
+        /// </summary>
+        public SpriteRenderer PlayerSprite;
+
+        /// <summary>
         /// Select sprite with the Player's Outfit
         /// </summary>
         public SpriteRenderer OutfitSprite;
@@ -53,6 +58,8 @@
             var allHairStyles = Resources.LoadAll<Sprite>("Sprites/hair_styles");
             var allAccessories = Resources.LoadAll<Sprite>("Sprites/hair_accessories");
             var allOutfits = Resources.LoadAll<Sprite>("Sprites/dress_styles");
+
+            PlayerSprite.color = settings.SkinColor;
 
             OutfitSprite.sprite = allOutfits[settings.Outfit];
             HairSprite.sprite = allHairStyles[settings.HairStyle];

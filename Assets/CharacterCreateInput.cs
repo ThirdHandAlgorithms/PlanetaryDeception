@@ -12,6 +12,11 @@
     public class CharacterCreateInput : MonoBehaviour
     {
         /// <summary>
+        /// Skin/player sprite
+        /// </summary>
+        public SpriteRenderer SkinPreview;
+
+        /// <summary>
         /// Hair sprite
         /// </summary>
         public SpriteRenderer HairPreview;
@@ -57,6 +62,11 @@
         private Sprite[] allOutfits;
 
         /// <summary>
+        /// List of skin colors
+        /// </summary>
+        private List<Color> possibleSkinColors;
+
+        /// <summary>
         /// List of hair colors
         /// </summary>
         private List<Color> possibleHairColors;
@@ -74,6 +84,33 @@
             allHairStyles = Resources.LoadAll<Sprite>("Sprites/hair_styles");
             allAccessories = Resources.LoadAll<Sprite>("Sprites/hair_accessories");
             allOutfits = Resources.LoadAll<Sprite>("Sprites/dress_styles");
+
+            possibleSkinColors = new List<Color>();
+
+            possibleSkinColors.Add(New255Color(0xCDA184));
+            possibleSkinColors.Add(New255Color(0x93614A));
+            possibleSkinColors.Add(New255Color(0x875B3E));
+            possibleSkinColors.Add(New255Color(0x764630));
+            possibleSkinColors.Add(New255Color(0x925C36));
+            possibleSkinColors.Add(New255Color(0x582812));
+            possibleSkinColors.Add(New255Color(0x4C2D18));
+
+            possibleSkinColors.Add(New255Color(0xF6E4E2));
+            possibleSkinColors.Add(New255Color(0xF5DAD3));
+            possibleSkinColors.Add(New255Color(0xF7D6C7));
+            possibleSkinColors.Add(New255Color(0xE89A84));
+            possibleSkinColors.Add(New255Color(0xECD3D9));
+            possibleSkinColors.Add(New255Color(0xDAA48A));
+            possibleSkinColors.Add(New255Color(0xEBBFA6));
+
+            possibleSkinColors.Add(New255Color(0xFFD1C1));
+            possibleSkinColors.Add(New255Color(0xD9A494));
+            possibleSkinColors.Add(New255Color(0xF5DAD3));
+            possibleSkinColors.Add(New255Color(0xFFD0BC));
+            possibleSkinColors.Add(New255Color(0xF1E4D1));
+            possibleSkinColors.Add(New255Color(0xF5AF95));
+            possibleSkinColors.Add(New255Color(0xE6A680));
+
 
             possibleHairColors = new List<Color>();
             possibleHairColors.Add(Color.black);
@@ -186,6 +223,11 @@
                         currentPreview = AccessoryPreview;
                         currentColorArray = possibleAccessoryColors;
                     }
+                    else if (currentControl.name == "TextSkinColor")
+                    {
+                        currentPreview = SkinPreview;
+                        currentColorArray = possibleSkinColors;
+                    }
 
                     if (currentSpriteArray != null)
                     {
@@ -240,6 +282,11 @@
                         currentPreview = AccessoryPreview;
                         currentColorArray = possibleAccessoryColors;
                     }
+                    else if (currentControl.name == "TextSkinColor")
+                    {
+                        currentPreview = SkinPreview;
+                        currentColorArray = possibleSkinColors;
+                    }
 
                     if (currentSpriteArray != null)
                     {
@@ -274,13 +321,27 @@
         /// <summary>
         /// Color from base-255 to floatbase color
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="g"></param>
-        /// <param name="b"></param>
+        /// <param name="r">byte</param>
+        /// <param name="g">byte</param>
+        /// <param name="b">byte</param>
         /// <returns>Color</returns>
         private Color New255Color(byte r, byte g, byte b)
         {
             return new Color(r / 255.0f, g / 255.0f, b / 255.0f);
+        }
+
+        /// <summary>
+        /// Color from base-255 to floatbase color
+        /// </summary>
+        /// <param name="rgb">int</param>
+        /// <returns>Color</returns>
+        private Color New255Color(int rgb)
+        {
+            byte r = (byte)((rgb & 0xff0000) >> 16);
+            byte g = (byte)((rgb & 0x00ff00) >> 8);
+            byte b = (byte)((rgb & 0x0000ff));
+
+            return New255Color(r, g, b);
         }
 
         /// <summary>
@@ -289,6 +350,8 @@
         private void SaveCharacterSettings()
         {
             var settings = CharacterSettings.Instance();
+
+            settings.SkinColor = SkinPreview.color;
 
             settings.HairStyle = GetNumberFromSpriteName(HairPreview.sprite.name);
             settings.HairColor = HairPreview.color;
