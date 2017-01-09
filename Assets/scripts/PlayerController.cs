@@ -29,16 +29,36 @@
         public float StandardSpeed = 2;
 
         /// <summary>
-        /// Sprite Renderer of the Player GameObject.
+        /// Select sprite with the Player's Outfit
         /// </summary>
-        private SpriteRenderer spriteRenderer;
+        public SpriteRenderer OutfitSprite;
+
+        /// <summary>
+        /// Sprite for the Player's Hair
+        /// </summary>
+        public SpriteRenderer HairSprite;
+
+        /// <summary>
+        /// Sprite for the Player's Accessory
+        /// </summary>
+        public SpriteRenderer AccessorySprite;
 
         /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            var settings = CharacterSettings.Instance();
+
+            var allHairStyles = Resources.LoadAll<Sprite>("Sprites/hair_styles");
+            var allAccessories = Resources.LoadAll<Sprite>("Sprites/hair_accessories");
+            var allOutfits = Resources.LoadAll<Sprite>("Sprites/dress_styles");
+
+            OutfitSprite.sprite = allOutfits[settings.Outfit];
+            HairSprite.sprite = allHairStyles[settings.HairStyle];
+            HairSprite.color = settings.HairColor;
+            AccessorySprite.sprite = allAccessories[settings.Accessory];
+            AccessorySprite.color = settings.AccessoryColor;
         }
 
         /// <summary>
@@ -74,7 +94,12 @@
         private void FlipCharacter()
         {
             CharacterFacingRight = !CharacterFacingRight;
-            spriteRenderer.flipX = !CharacterFacingRight;
+
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var renderer in renderers)
+            {
+                renderer.flipX = !CharacterFacingRight;
+            }
         }
     }
 }

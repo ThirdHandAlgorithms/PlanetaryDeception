@@ -16,7 +16,7 @@
         {
             if (Input.anyKey)
             {
-                SceneManager.LoadScene("Level_1");
+                SceneManager.LoadScene("CharacterCreation");
             }
         }
     }
