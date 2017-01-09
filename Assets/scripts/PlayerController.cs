@@ -29,16 +29,10 @@
         public float StandardSpeed = 2;
 
         /// <summary>
-        /// Sprite Renderer of the Player GameObject.
-        /// </summary>
-        private SpriteRenderer spriteRenderer;
-
-        /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         /// <summary>
@@ -74,7 +68,12 @@
         private void FlipCharacter()
         {
             CharacterFacingRight = !CharacterFacingRight;
-            spriteRenderer.flipX = !CharacterFacingRight;
+
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var renderer in renderers)
+            {
+                renderer.flipX = !CharacterFacingRight;
+            }
         }
     }
 }
