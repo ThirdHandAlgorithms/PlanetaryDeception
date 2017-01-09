@@ -130,16 +130,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 212388391925050832, guid: 2aba4169573ee5d4b878db9c4ce98167,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300014, guid: a7a7b3040c3f5134480f71bb6d7116d9,
-        type: 3}
-    - target: {fileID: 1117485701236610, guid: 2aba4169573ee5d4b878db9c4ce98167, type: 2}
-      propertyPath: m_Name
-      value: PlayerHairAccessory
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2aba4169573ee5d4b878db9c4ce98167, type: 2}
   m_IsPrefabParent: 0

@@ -28,11 +28,26 @@
         /// </summary>
         public float StandardSpeed = 2;
 
+        public SpriteRenderer OutfitSprite;
+        public SpriteRenderer HairSprite;
+        public SpriteRenderer AccessorySprite;
+
         /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
         {
+            var settings = CharacterSettings.Instance();
+
+            var allHairStyles = Resources.LoadAll<Sprite>("Sprites/hair_styles");
+            var allAccessories = Resources.LoadAll<Sprite>("Sprites/hair_accessories");
+            var allOutfits = Resources.LoadAll<Sprite>("Sprites/dress_styles");
+
+            OutfitSprite.sprite = allOutfits[settings.Outfit];
+            HairSprite.sprite = allHairStyles[settings.HairStyle];
+            HairSprite.color = settings.HairColor;
+            AccessorySprite.sprite = allAccessories[settings.Accessory];
+            AccessorySprite.color = settings.AccessoryColor;
         }
 
         /// <summary>

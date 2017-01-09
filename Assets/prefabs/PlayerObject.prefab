@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4624493233114060}
   - component: {fileID: 212388391925050832}
   m_Layer: 0
-  m_Name: hair_accessories_5
+  m_Name: PlayerAccessory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -370,6 +370,9 @@ MonoBehaviour:
   MoveForce: 365
   MaxSpeed: 5
   StandardSpeed: 2
+  OutfitSprite: {fileID: 212810548145609246}
+  HairSprite: {fileID: 212660829181053684}
+  AccessorySprite: {fileID: 212388391925050832}
 --- !u!114 &114823611834252244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,7 +432,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 880411893
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300010, guid: a7a7b3040c3f5134480f71bb6d7116d9, type: 3}
+  m_Sprite: {fileID: 21300014, guid: a7a7b3040c3f5134480f71bb6d7116d9, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -292,7 +292,7 @@
         /// <returns>string</returns>
         protected string OSTxt()
         {
-            return "Solar OS V3.2\n\n";
+            return "Solar OS V3.2 - logged in as: " + CharacterSettings.Instance().Name + "\n\n";
         }
 
         /// <summary>
@@ -401,6 +401,8 @@
             }
             else if (menuItem == null)
             {
+                currentApplication = null;
+
                 LoadMainMenu();
             }
         }
