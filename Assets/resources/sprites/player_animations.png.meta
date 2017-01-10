@@ -1,17 +1,14 @@
 fileFormatVersion: 2
-guid: bde7a771cb96e3c4a908ab46eadf4788
-timeCreated: 1483991704
+guid: 003f2bccdea466944ba300709f475df4
+timeCreated: 1483989740
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dress_styles_0
-    21300002: dress_styles_1
-    21300004: dress_styles_2
-    21300006: dress_styles_3
-    21300008: dress_styles_4
-    21300010: dress_styles_5
-    21300012: dress_styles_6
-    21300014: dress_styles_7
+    21300000: player_animations_0
+    21300002: player_animations_1
+    21300004: player_animations_2
+    21300006: player_animations_3
+    21300008: player_animations_4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -78,7 +75,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dress_styles_0
+      name: player_animations_0
       rect:
         serializedVersion: 2
         x: 0
@@ -86,12 +83,12 @@ TextureImporter:
         width: 64
         height: 92
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dress_styles_1
+      name: player_animations_1
       rect:
         serializedVersion: 2
         x: 64
@@ -99,12 +96,12 @@ TextureImporter:
         width: 64
         height: 92
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dress_styles_2
+      name: player_animations_2
       rect:
         serializedVersion: 2
         x: 128
@@ -112,12 +109,12 @@ TextureImporter:
         width: 64
         height: 92
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: dress_styles_3
+      name: player_animations_3
       rect:
         serializedVersion: 2
         x: 192
@@ -125,7 +122,20 @@ TextureImporter:
         width: 64
         height: 92
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: player_animations_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

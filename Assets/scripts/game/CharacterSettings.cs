@@ -28,6 +28,11 @@
         public int Outfit;
 
         /// <summary>
+        /// Skin color
+        /// </summary>
+        public Color SkinColor;
+
+        /// <summary>
         /// Hair color
         /// </summary>
         public Color HairColor;
@@ -53,6 +58,7 @@
             Outfit = 0;
             HairColor = Color.black;
             AccessoryColor = Color.black;
+            SkinColor = new Color(0xCD / 255f, 0xA1 / 255f, 0x84 / 255f);
         }
 
         /// <summary>
