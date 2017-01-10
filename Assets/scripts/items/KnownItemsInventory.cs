@@ -1,20 +1,26 @@
 ﻿namespace PlanetaryDeception
 {
     /// <summary>
+    /// Enum of KnownItem id's in the game
+    /// </summary>
+    public enum KnownItem
+    {
+        BubblegumWrappingPaper,
+        PlayerSecurityAccessCard,
+        IOTVenusHouseLockControl,
+        VoasisCredentials,
+        VoasisWebsiteCredentialsUsage,
+        VenrefInterrogated,
+        CeresInvitation,
+        VenusLaunchAssistanceTicket,
+        Chapter2
+    }
+
+    /// <summary>
     /// Known Items Inventory.
     /// </summary>
     public class KnownItemsInventory : ItemInventory
     {
-        /// <summary>
-        /// Personal access card to terminals
-        /// </summary>
-        public const int PlayerSecurityAccessCard = 1;
-
-        /// <summary>
-        /// Hidden lock control
-        /// </summary>
-        public const int IOTVenusHouseLockControl = 2;
-
         /// <summary>
         /// Singleton Instance.
         /// </summary>
@@ -25,8 +31,15 @@
         /// </summary>
         public KnownItemsInventory()
         {
-            Add(new ItemTag(PlayerSecurityAccessCard, ItemClassType.Identification, "Security access card"));
-            Add(new ItemTag(IOTVenusHouseLockControl, ItemClassType.HiddenIOTControl, string.Empty));
+            Add(new ItemTag(KnownItem.BubblegumWrappingPaper, ItemClassType.Trash, "Bubblegum wrapping paper"));
+            Add(new ItemTag(KnownItem.PlayerSecurityAccessCard, ItemClassType.Identification, "Security access card"));
+            Add(new ItemTag(KnownItem.IOTVenusHouseLockControl, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.VoasisCredentials, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.VoasisWebsiteCredentialsUsage, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.VenrefInterrogated, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.CeresInvitation, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.VenusLaunchAssistanceTicket, ItemClassType.Ticket, "Ticket: Venus Launch Assistance"));
+            Add(new ItemTag(KnownItem.Chapter2, ItemClassType.Hidden, string.Empty));
         }
 
         /// <summary>
@@ -48,7 +61,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="destinationInventory"></param>
-        public override void TransferItem(int itemId, ItemInventory destinationInventory)
+        public override void TransferItem(KnownItem itemId, ItemInventory destinationInventory)
         {
             var item = Peek(itemId);
             destinationInventory.Add(item);

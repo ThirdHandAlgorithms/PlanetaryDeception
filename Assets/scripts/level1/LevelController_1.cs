@@ -22,16 +22,16 @@
             {
                 if (PlayerIsTouching("Dressoir"))
                 {
-                    if (!inventory.ContainsItem(KnownItemsInventory.PlayerSecurityAccessCard))
+                    if (!inventory.ContainsItem(KnownItem.PlayerSecurityAccessCard))
                     {
                         var knownItems = KnownItemsInventory.Instance();
-                        knownItems.TransferItem(KnownItemsInventory.PlayerSecurityAccessCard, inventory);
-                        AlertText.text = "You picked up " + knownItems.GetName(KnownItemsInventory.PlayerSecurityAccessCard);
+                        knownItems.TransferItem(KnownItem.PlayerSecurityAccessCard, inventory);
+                        AlertText.text = "You picked up " + knownItems.GetName(KnownItem.PlayerSecurityAccessCard);
                     }
                 }
                 else if (PlayerIsTouching("Console"))
                 {
-                    if (!inventory.ContainsItem(KnownItemsInventory.PlayerSecurityAccessCard))
+                    if (!inventory.ContainsItem(KnownItem.PlayerSecurityAccessCard))
                     {
                         AlertText.text = "You have no access to this terminal";
                     }
@@ -42,7 +42,7 @@
                 }
                 else if (PlayerIsTouching("Door"))
                 {
-                    if (inventory.ContainsItem(KnownItemsInventory.IOTVenusHouseLockControl))
+                    if (inventory.ContainsItem(KnownItem.IOTVenusHouseLockControl))
                     {
                         SceneManager.LoadScene("Level_2");
                     }

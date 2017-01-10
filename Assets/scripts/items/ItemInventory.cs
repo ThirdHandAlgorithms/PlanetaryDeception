@@ -41,7 +41,7 @@
         /// </summary>
         /// <param name="itemId">Item ID</param>
         /// <returns>bool</returns>
-        public bool ContainsItem(int itemId)
+        public bool ContainsItem(KnownItem itemId)
         {
             foreach (var item in items)
             {
@@ -60,7 +60,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns>ItemTag</returns>
-        public ItemTag Pull(int itemId)
+        public ItemTag Pull(KnownItem itemId)
         {
             var item = Peek(itemId);
             if (item == null)
@@ -78,7 +78,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="destinationInventory"></param>
-        public virtual void TransferItem(int itemId, ItemInventory destinationInventory)
+        public virtual void TransferItem(KnownItem itemId, ItemInventory destinationInventory)
         {
             var item = Pull(itemId);
             destinationInventory.Add(item);
@@ -98,7 +98,7 @@
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns>string</returns>
-        public string GetName(int itemId)
+        public string GetName(KnownItem itemId)
         {
             var item = Peek(itemId);
             if (item == null)
@@ -114,7 +114,7 @@
         /// </summary>
         /// <param name="itemId">int</param>
         /// <returns>null|ItemTag</returns>
-        protected ItemTag Peek(int itemId)
+        protected ItemTag Peek(KnownItem itemId)
         {
             foreach (var item in Items)
             {

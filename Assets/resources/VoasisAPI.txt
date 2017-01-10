@@ -14,22 +14,6 @@
         private string username;
         private string password;
 
-        public class VoasisAPIDomeInfo
-        {
-            public string Id;
-            public float O2Capacity;
-            public float O2Amount;
-            public float CO2Capacity;
-            public float CO2Amount;
-        }
-
-        public class VoasisAPIInfo
-        {
-            public string StatusDescription;
-
-            public List<VoasisAPIDomeInfo> Domes;
-        }
-
         public VoasisAPI()
         {
             // todo: use parameters
@@ -63,6 +47,22 @@
             }
 
             return info;
+        }
+		
+        public class VoasisAPIDomeInfo
+        {
+            public string Id;
+            public float O2Capacity;
+            public float O2Amount;
+            public float CO2Capacity;
+            public float CO2Amount;
+        }
+
+        public class VoasisAPIInfo
+        {
+            public string StatusDescription;
+
+            public List<VoasisAPIDomeInfo> Domes;
         }
     }
 }

@@ -12,7 +12,7 @@
         /// </summary>
         /// <param name="message"></param>
         /// <param name="itemId"></param>
-        public ItemException(string message, int itemId) : base(message + " (" + itemId + ")")
+        public ItemException(string message, KnownItem itemId) : base(message + " (" + itemId + ")")
         {
         }
     }
