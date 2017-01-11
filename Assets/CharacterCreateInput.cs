@@ -111,7 +111,6 @@
             possibleSkinColors.Add(New255Color(0xF5AF95));
             possibleSkinColors.Add(New255Color(0xE6A680));
 
-
             possibleHairColors = new List<Color>();
             possibleHairColors.Add(Color.black);
             possibleHairColors.Add(Color.white);
@@ -339,7 +338,7 @@
         {
             byte r = (byte)((rgb & 0xff0000) >> 16);
             byte g = (byte)((rgb & 0x00ff00) >> 8);
-            byte b = (byte)((rgb & 0x0000ff));
+            byte b = (byte)(rgb & 0x0000ff);
 
             return New255Color(r, g, b);
         }

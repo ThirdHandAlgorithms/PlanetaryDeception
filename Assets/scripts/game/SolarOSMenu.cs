@@ -42,5 +42,28 @@
             OnRunApplication = onRun;
             OnDisplay = onDisplay;
         }
+
+        /// <summary>
+        /// Constructor2 menuitem
+        /// </summary>
+        /// <param name="description"></param>
+        public SolarOSMenuItem(string description)
+        {
+            Description = description;
+            OnRunApplication = null;
+            OnDisplay = null;
+        }
+
+        /// <summary>
+        /// Constructor3 menuitem
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="application"></param>
+        public SolarOSMenuItem(string description, SolarOSApplication application)
+        {
+            Description = description;
+            OnRunApplication = application.Run;
+            OnDisplay = application.RefreshDisplay;
+        }
     }
 }

@@ -1,0 +1,12 @@
+﻿Welcome ADMIN!
+
+Dashboard
+* Dome_1: 20% O2, reserve 50%
+* Dome_2: 50% O2, reserve 90%
+* Dome_3: 50% O2, reserve 80%
+* Dome_4: 50% O2, reserve 75%
+* Click here for more
+
+Recent log entries
+* Transfer 80% O2 to LD_1, by user g.doa
+* Auto adjust 20% to Dome_1 - treshhold warning override by g.doa

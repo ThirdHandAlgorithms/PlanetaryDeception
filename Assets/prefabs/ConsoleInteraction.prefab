@@ -275,6 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AlertText: {fileID: 0}
   ConsoleOutput: {fileID: 114673552452352726}
+  ConsoleScrollRect: {fileID: 114536139933451276}
   Network: 0
 --- !u!114 &114673552452352726
 MonoBehaviour:
@@ -301,7 +302,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 20
+    m_MaxSize: 18
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1

@@ -8,7 +8,9 @@
         Trash = 0,
         Identification = 1,
         ProjectileWeapon = 2,
-        ParticleWeapon = 3
+        ParticleWeapon = 3,
+        Hidden = 4,
+        Ticket = 5
     }
 
     /// <summary>
@@ -22,7 +24,7 @@
         /// <param name="itemId"></param>
         /// <param name="itemClass"></param>
         /// <param name="itemName"></param>
-        public ItemTag(int itemId, ItemClassType itemClass, string itemName)
+        public ItemTag(KnownItem itemId, ItemClassType itemClass, string itemName)
         {
             ItemID = itemId;
             ItemClass = itemClass;
@@ -43,7 +45,7 @@
         /// <summary>
         /// Unique identifier for the Item
         /// </summary>
-        public int ItemID { get; set; }
+        public KnownItem ItemID { get; set; }
 
         /// <summary>
         /// The type of Item

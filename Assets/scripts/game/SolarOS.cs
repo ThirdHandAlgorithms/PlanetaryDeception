@@ -17,9 +17,24 @@
         public Text ConsoleOutput;
 
         /// <summary>
+        /// The scrolling view port for the ConsoleOutput
+        /// </summary>
+        public ScrollRect ConsoleScrollRect;
+
+        /// <summary>
         /// Current Network the console is connected to
         /// </summary>
         public SolarOSNetwork Network;
+
+        /// <summary>
+        /// The currently running application
+        /// </summary>
+        public SolarOSMenuItem CurrentApplication;
+
+        /// <summary>
+        /// The current by the user selected menu item
+        /// </summary>
+        public SolarOSMenuItem SelectedMenuItem;
 
         /// <summary>
         /// delay helper vars
@@ -27,24 +42,9 @@
         protected float nextInputAllowed = 0.0F;
 
         /// <summary>
-        /// Current menu's menuitems
-        /// </summary>
-        protected List<SolarOSMenuItem> menuItems;
-
-        /// <summary>
         /// Breadcrumb path
         /// </summary>
         protected List<SolarOSMenuItem> breadCrumbs;
-
-        /// <summary>
-        /// The currently running application
-        /// </summary>
-        protected SolarOSMenuItem currentApplication;
-
-        /// <summary>
-        /// The current by the user selected menu item
-        /// </summary>
-        protected SolarOSMenuItem selectedMenuItem;
 
         /// <summary>
         /// Possible Networks
@@ -52,12 +52,24 @@
         public enum SolarOSNetwork
         {
             Space = 0,
+
             Venus = 1,
-            EarthMoon = 2,
-            Mars = 3,
-            Ceres = 4,
-            Europa = 5
+            VenusHome = 3,
+            Venref = 5,
+
+            EarthMoon = 8,
+
+            Mars = 16,
+
+            Ceres = 24,
+
+            Europa = 32
         }
+
+        /// <summary>
+        /// Current menu's menuitems
+        /// </summary>
+        public List<SolarOSMenuItem> MenuItems { get; set; }
 
         /// <summary>
         /// Unity start
@@ -99,8 +111,10 @@
                 }
                 else if (Input.GetButtonUp("Fire2"))
                 {
+                    ScrollToTop();
+
                     var lastBreadcrumb = PopPreviousApplicationBreadcrumb();
-                    if ((lastBreadcrumb == null) && (currentApplication == null))
+                    if ((lastBreadcrumb == null) && (CurrentApplication == null))
                     {
                         var currentScene = SceneManager.GetActiveScene();
                         var currentSceneName = currentScene.name;
@@ -109,26 +123,55 @@
                     }
                     else
                     {
+                        var reselectOption = CurrentApplication;
+
                         RunMenuItemWithoutAddingToBreadcrumbs(lastBreadcrumb);
+
+                        SelectItemWithSameDescription(reselectOption);
                     }
                 }
             }
 
-            if (currentApplication == null)
+            if (CurrentApplication == null)
             {
                 RefreshDisplay();
             }
-            else if (currentApplication.OnDisplay != null)
+            else if (CurrentApplication.OnDisplay != null)
             {
-                currentApplication.OnDisplay();
+                CurrentApplication.OnDisplay();
             }
+        }
+
+        /// <summary>
+        /// Sometimes we make new menuitems but stil want to select our previous selection
+        /// </summary>
+        /// <param name="reselectItem"></param>
+        public void SelectItemWithSameDescription(SolarOSMenuItem reselectItem)
+        {
+            foreach (var item in MenuItems)
+            {
+                if (item.Description == reselectItem.Description)
+                {
+                    SelectedMenuItem = item;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// If network is venus/venushome/venref/etc
+        /// </summary>
+        /// <returns>bool</returns>
+        public bool NetworkIsOnVenus()
+        {
+            return (Network & SolarOSNetwork.Venus) > 0;
         }
 
         /// <summary>
         /// Returns the latest breadcrumb
         /// </summary>
         /// <returns>SolarOSMenuItem</returns>
-        protected SolarOSMenuItem PopPreviousApplicationBreadcrumb()
+        public SolarOSMenuItem PopPreviousApplicationBreadcrumb()
         {
             if (breadCrumbs.Count > 0)
             {
@@ -145,123 +188,10 @@
         }
 
         /// <summary>
-        /// Main menu
-        /// </summary>
-        protected virtual void LoadMainMenu()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            if (Network != SolarOSNetwork.Space)
-            {
-                menuItems.Add(new SolarOSMenuItem("social media", LoadApplicationNotInstalled, RefreshDisplay));
-                if (Network == SolarOSNetwork.Venus)
-                {
-                    menuItems.Add(new SolarOSMenuItem("IOT devices", LoadApplicationNotInstalled, RefreshDisplay));
-                    menuItems.Add(new SolarOSMenuItem("VPN to work", LoadVPNToWork, RefreshDisplay));
-                }
-
-                menuItems.Add(new SolarOSMenuItem("local tor", LoadApplicationNotInstalled, RefreshDisplay));
-            }
-
-            menuItems.Add(new SolarOSMenuItem("solarbits wallet", LoadSolarBitsWallet, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Loads a textfile from the resources as a menu
-        /// </summary>
-        /// <param name="resourceName">string</param>
-        protected void LoadTextFileAsMenu(string resourceName)
-        {
-            menuItems = new List<SolarOSMenuItem>();
-
-            var scriptText = Resources.Load(resourceName) as TextAsset;
-            var stringSeparators = new string[] { "\r\n", "\r", "\n" };
-            var result = scriptText.text.Split(stringSeparators, StringSplitOptions.None);
-
-            foreach (var line in result)
-            {
-                menuItems.Add(new SolarOSMenuItem(line.ToLower(), null, null));
-            }
-        }
-
-        /// <summary>
-        /// Your home Internet Of Things devices
-        /// </summary>
-        protected virtual void LoadIOTDevices()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("front door lock", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("front door camera", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("air conditioning", () => { }, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("lights", () => { }, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Load Work GIT
-        /// </summary>
-        protected virtual void LoadWorkGIT()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(
-                new SolarOSMenuItem(
-                    "latest code review request",
-                    () =>
-                    {
-                        LoadTextFileAsMenu("VoasisAPI");
-                    },
-                    RefreshDisplayGITCodeReview));
-        }
-
-        /// <summary>
-        /// Work VPN application listing
-        /// </summary>
-        protected virtual void LoadVPNToWork()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("GIT", LoadWorkGIT, RefreshDisplay));
-            menuItems.Add(new SolarOSMenuItem("work orders", () => { }, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Twitter
-        /// </summary>
-        protected virtual void LoadSocialMedia()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("send direct message", () => { }, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Default menu when an application is not installed
-        /// </summary>
-        protected virtual void LoadApplicationNotInstalled()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Application not installed", () => { }, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Loads the SolarBitsWallet application
-        /// </summary>
-        protected virtual void LoadSolarBitsWallet()
-        {
-            menuItems = new List<SolarOSMenuItem>();
-            menuItems.Add(new SolarOSMenuItem("Account balance: 0 solarbits", () => { }, RefreshDisplay));
-        }
-
-        /// <summary>
-        /// Returns the selected menu item
-        /// </summary>
-        /// <returns>SolarOSMenuItem</returns>
-        protected SolarOSMenuItem GetSelectedMenuItem()
-        {
-            return selectedMenuItem;
-        }
-
-        /// <summary>
         /// Appends a breadcrumb
         /// </summary>
         /// <param name="menuItem">SolarOSMenuItem</param>
-        protected void AddBreadCrumb(SolarOSMenuItem menuItem)
+        public void AddBreadCrumb(SolarOSMenuItem menuItem)
         {
             if (!breadCrumbs.Contains(menuItem))
             {
@@ -273,29 +203,153 @@
         /// Menu has items?
         /// </summary>
         /// <returns>bool</returns>
-        protected bool HasItems()
+        public bool HasItems()
         {
-            return (menuItems != null) && (menuItems.Count > 0);
+            return (MenuItems != null) && (MenuItems.Count > 0);
         }
 
         /// <summary>
         /// Initialize selectedMenuItem for the current menu
         /// </summary>
-        protected void InitSelection()
+        public void InitSelection()
         {
-            if (HasItems() && ((selectedMenuItem == null) || !menuItems.Contains(selectedMenuItem)))
+            if (HasItems() && ((SelectedMenuItem == null) || !MenuItems.Contains(SelectedMenuItem)))
             {
-                selectedMenuItem = menuItems[0];
+                SelectedMenuItem = MenuItems[0];
             }
         }
 
         /// <summary>
         /// Return OS header
         /// </summary>
+        /// <param name="optionalAppName">string</param>
         /// <returns>string</returns>
-        protected string OSTxt()
+        public string OSTxt(string optionalAppName = "")
         {
-            return "Solar OS V3.2 - logged in as: " + CharacterSettings.Instance().Name + "\n\n";
+            string txt =
+                "Solar OS V3.2" +
+                " - logged in as: " + CharacterSettings.Instance().Name;
+
+            if (optionalAppName != string.Empty)
+            {
+                txt += " - " + optionalAppName;
+            }
+
+            return txt + "\n\n";
+        }
+
+        /// <summary>
+        /// Scrolls the Scrollview to the top
+        /// </summary>
+        protected void ScrollToTop()
+        {
+            ConsoleScrollRect.verticalNormalizedPosition = 1;
+        }
+
+        /// <summary>
+        /// Main menu
+        /// </summary>
+        protected virtual void LoadMainMenu()
+        {
+            MenuItems = new List<SolarOSMenuItem>();
+            if (Network != SolarOSNetwork.Space)
+            {
+                MenuItems.Add(new SolarOSMenuItem("social media", new SolarOSSocialMedia(this)));
+                if ((Network == SolarOSNetwork.VenusHome) || (Network == SolarOSNetwork.Venref))
+                {
+                    MenuItems.Add(new SolarOSMenuItem("IOT devices", LoadIOTDevices, RefreshDisplay));
+                }
+
+                if (NetworkIsOnVenus())
+                {
+                    MenuItems.Add(new SolarOSMenuItem("VPN to work", LoadVPNToWork, RefreshDisplay));
+                }
+
+                MenuItems.Add(new SolarOSMenuItem("secure web", new SolarOSWeb(this)));
+            }
+
+            MenuItems.Add(new SolarOSMenuItem("solarbits wallet", LoadSolarBitsWallet, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Your home Internet Of Things devices
+        /// </summary>
+        protected virtual void LoadIOTDevices()
+        {
+            MenuItems = new List<SolarOSMenuItem>();
+
+            var inv = PlayerInventory.Instance();
+
+            // todo: make a separate class for IOT control, this code is getting silly
+            if (Network == SolarOSNetwork.VenusHome)
+            {
+                string frontDoorLockText;
+                if (inv.ContainsItem(KnownItem.IOTVenusHouseLockControl))
+                {
+                    frontDoorLockText = "lock front door";
+                }
+                else
+                {
+                    frontDoorLockText = "unlock front door";
+                }
+
+                MenuItems.Add(new SolarOSMenuItem(
+                    frontDoorLockText,
+                    () =>
+                    {
+                        if (inv.ContainsItem(KnownItem.IOTVenusHouseLockControl))
+                        {
+                            inv.Pull(KnownItem.IOTVenusHouseLockControl);
+                            MenuItems[0].Description = "unlock front door";
+                        }
+                        else
+                        {
+                            KnownItemsInventory.Instance().TransferItem(KnownItem.IOTVenusHouseLockControl, inv);
+                            MenuItems[0].Description = "lock front door";
+                        }
+
+                        PopPreviousApplicationBreadcrumb();
+                    },
+                    RefreshDisplay));
+            }
+        }
+
+        /// <summary>
+        /// Work VPN application listing
+        /// </summary>
+        protected virtual void LoadVPNToWork()
+        {
+            MenuItems = new List<SolarOSMenuItem>();
+            MenuItems.Add(new SolarOSMenuItem("GIT", new SolarOSGIT(this)));
+        }
+        
+        /// <summary>
+        /// Default menu when an application is not installed
+        /// </summary>
+        protected virtual void LoadApplicationNotInstalled()
+        {
+            MenuItems = new List<SolarOSMenuItem>();
+            MenuItems.Add(new SolarOSMenuItem("Application not installed", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Loads the SolarBitsWallet application
+        /// </summary>
+        protected virtual void LoadSolarBitsWallet()
+        {
+            var wallet = PlayerWallet.Instance();
+
+            MenuItems = new List<SolarOSMenuItem>();
+            MenuItems.Add(new SolarOSMenuItem("Account balance: " + wallet.GetAmount() + " solarbits", () => { }, RefreshDisplay));
+        }
+
+        /// <summary>
+        /// Returns the selected menu item
+        /// </summary>
+        /// <returns>SolarOSMenuItem</returns>
+        protected SolarOSMenuItem GetSelectedMenuItem()
+        {
+            return SelectedMenuItem;
         }
 
         /// <summary>
@@ -315,9 +369,9 @@
         {
             string menuOptions = string.Empty;
 
-            foreach (var menuItem in menuItems)
+            foreach (var menuItem in MenuItems)
             {
-                if (menuItem == selectedMenuItem)
+                if (menuItem == SelectedMenuItem)
                 {
                     menuOptions += "[x]";
                 }
@@ -346,19 +400,6 @@
         }
 
         /// <summary>
-        /// GIT code review request
-        /// </summary>
-        protected virtual void RefreshDisplayGITCodeReview()
-        {
-            InitSelection();
-
-            ConsoleOutput.text =
-                OSTxt() +
-                "1 file to review:\n" +
-                MenuOptionsTxt();
-        }
-
-        /// <summary>
         /// Go up a menuitem
         /// </summary>
         protected void MoveSelectionUp()
@@ -366,10 +407,10 @@
             var currentSelection = GetSelectedMenuItem();
             if (currentSelection != null)
             {
-                var itemIndex = menuItems.IndexOf(currentSelection);
+                var itemIndex = MenuItems.IndexOf(currentSelection);
                 if (itemIndex > 0)
                 {
-                    selectedMenuItem = menuItems[itemIndex - 1];
+                    SelectedMenuItem = MenuItems[itemIndex - 1];
                 }
             }
         }
@@ -382,10 +423,10 @@
             var currentSelection = GetSelectedMenuItem();
             if (currentSelection != null)
             {
-                var itemIndex = menuItems.IndexOf(currentSelection);
-                if (itemIndex < menuItems.Count - 1)
+                var itemIndex = MenuItems.IndexOf(currentSelection);
+                if (itemIndex < MenuItems.Count - 1)
                 {
-                    selectedMenuItem = menuItems[itemIndex + 1];
+                    SelectedMenuItem = MenuItems[itemIndex + 1];
                 }
             }
         }
@@ -398,13 +439,13 @@
         {
             if ((menuItem != null) && (menuItem.OnRunApplication != null))
             {
-                currentApplication = menuItem;
+                CurrentApplication = menuItem;
 
                 menuItem.OnRunApplication();
             }
             else if (menuItem == null)
             {
-                currentApplication = null;
+                CurrentApplication = null;
 
                 LoadMainMenu();
             }
@@ -416,9 +457,16 @@
         /// <param name="menuItem"></param>
         protected virtual void RunMenuItem(SolarOSMenuItem menuItem)
         {
-            AddBreadCrumb(currentApplication);
+            if ((menuItem != null) && (menuItem.OnRunApplication == null) && (menuItem.OnDisplay == null))
+            {
+                // nothing to run
+            }
+            else
+            {
+                AddBreadCrumb(CurrentApplication);
 
-            RunMenuItemWithoutAddingToBreadcrumbs(menuItem);
+                RunMenuItemWithoutAddingToBreadcrumbs(menuItem);
+            }
         }
     }
 }
