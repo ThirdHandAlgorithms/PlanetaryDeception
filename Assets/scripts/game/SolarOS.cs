@@ -74,8 +74,10 @@
         /// <summary>
         /// Unity start
         /// </summary>
-        public void Start()
+        public override void Start()
         {
+            base.Start();
+
             breadCrumbs = new List<SolarOSMenuItem>();
             LoadMainMenu();
         }
