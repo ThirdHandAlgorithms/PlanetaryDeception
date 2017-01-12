@@ -9,14 +9,6 @@
     public class Level_2_Launch : LevelBase
     {
         /// <summary>
-        /// Start
-        /// </summary>
-        public void Start()
-        {
-            currentInstance = this;
-        }
-
-        /// <summary>
         /// Update
         /// </summary>
         public void Update()

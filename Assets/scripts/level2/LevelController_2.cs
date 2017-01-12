@@ -9,14 +9,6 @@
     public class LevelController_2 : LevelBase
     {
         /// <summary>
-        /// start
-        /// </summary>
-        public void Start()
-        {
-            currentInstance = this;
-        }
-
-        /// <summary>
         /// Update Event handler
         /// </summary>
         public void Update()

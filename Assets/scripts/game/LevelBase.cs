@@ -23,6 +23,14 @@
         /// </summary>
         public LevelBase()
         {
+            Start();
+        }
+
+        /// <summary>
+        /// Level start, if you reimplement Start, you need to manually execute this
+        /// </summary>
+        public virtual void Start()
+        {
             PlayerInContactWith = null;
             currentInstance = this;
         }
