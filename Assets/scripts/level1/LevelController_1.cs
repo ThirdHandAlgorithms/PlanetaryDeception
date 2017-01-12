@@ -37,7 +37,8 @@
                     }
                     else
                     {
-                        SceneManager.LoadScene("Level_1a");
+                        SceneManager.LoadScene("Level_1_console");
+                        return;
                     }
                 }
                 else if (PlayerIsTouching("Door"))
@@ -45,6 +46,7 @@
                     if (inventory.ContainsItem(KnownItem.IOTVenusHouseLockControl))
                     {
                         SceneManager.LoadScene("Level_2");
+                        return;
                     }
                     else
                     {
