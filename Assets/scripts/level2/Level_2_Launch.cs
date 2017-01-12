@@ -6,10 +6,10 @@
     /// <summary>
     /// Level 2
     /// </summary>
-    public class LevelController_2 : LevelBase
+    public class Level_2_Launch : LevelBase
     {
         /// <summary>
-        /// start
+        /// Start
         /// </summary>
         public void Start()
         {
@@ -17,44 +17,45 @@
         }
 
         /// <summary>
-        /// Update Event handler
+        /// Update
         /// </summary>
         public void Update()
         {
-            currentInstance = this;
-
             if (Input.GetButton("Fire1"))
             {
                 var playerInventory = PlayerInventory.Instance();
-
                 if (PlayerIsTouching("Console"))
-                {
-                    AlertText.text = "You have no access to this terminal";
-                }
-                else if (PlayerIsTouching("Door"))
                 {
                     if (playerInventory.ContainsItem(KnownItem.PlayerSecurityAccessCard))
                     {
-                        SceneManager.LoadScene("Level_1");
+                        SceneManager.LoadScene("Level_2_launch_console");
                         return;
                     }
                     else
                     {
-                        AlertText.text = "Access denied, you need your Security Access card";
+                        AlertText.text = "Access denied";
                     }
                 }
-                else if (PlayerIsTouching("LaunchEntrance"))
+                else if (PlayerIsTouching("ExitDoor"))
                 {
-                    SceneManager.LoadScene("Level_2_launch");
+                    SceneManager.LoadScene("Level_2");
                     return;
                 }
-                else if (PlayerIsTouching("ViteEntrance"))
+                else if (PlayerIsTouching("EmptyLauncher"))
                 {
-                    AlertText.text = "The office is currently closed";
+                    AlertText.text = "There's no ship docked here";
                 }
-                else if (PlayerIsTouching("Flowershop"))
+                else if (PlayerIsTouching("DockedSolarSailShip"))
                 {
-                    AlertText.text = "The shopkeeper is not here";
+                    if (playerInventory.ContainsItem(KnownItem.VenusLaunchAssistanceTicket))
+                    {
+                        SceneManager.LoadScene("Level_EndOfDemo");
+                        return;
+                    }
+                    else
+                    {
+                        AlertText.text = "You require a Launch Assistance ticket";
+                    }
                 }
             }
         }
