@@ -1,6 +1,8 @@
 ﻿namespace PlanetaryDeception
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Item Inventory.
@@ -55,6 +57,21 @@
         }
 
         /// <summary>
+        /// ContainsOneItem
+        /// </summary>
+        /// <param name="itemIds"></param>
+        /// <returns>bool</returns>
+        public bool ContainsOneItem(KnownItem[] itemIds)
+        {
+            var queryItems =
+                from item in items
+               where itemIds.Contains(item.ItemID)
+              select item;
+
+            return queryItems.Count<ItemTag>() > 0;
+        }
+
+        /// <summary>
         /// Pulls an Item out of the Inventory, returns the retreived Item.
         /// If the Item is not in the Inventory, an exception is thrown.
         /// </summary>
@@ -90,7 +107,14 @@
         /// <param name="itemTag"></param>
         public void Add(ItemTag itemTag)
         {
-            items.Add(itemTag);
+            if (itemTag != null)
+            {
+                items.Add(itemTag);
+            }
+            else
+            {
+                throw new Exception("Hey, you're trying to add [null] to an inventory");
+            }
         }
 
         /// <summary>

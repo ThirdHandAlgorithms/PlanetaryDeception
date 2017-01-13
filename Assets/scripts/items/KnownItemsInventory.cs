@@ -13,7 +13,16 @@
         VenrefInterrogated,
         CeresInvitation,
         VenusLaunchAssistanceTicket,
-        Chapter2
+        Chapter2,
+        StationTransportUnlocked,
+        StationTransportTicketDome1,
+        StationTransportTicketDome2,
+        StationTransportTicketDome3,
+        StationTransportTicketDome4,
+        StationTransportTicketDome5,
+        StationTransportTicketDome6,
+        StationTransportTicketDome7,
+        StationTransportTicketDome8
     }
 
     /// <summary>
@@ -40,6 +49,15 @@
             Add(new ItemTag(KnownItem.CeresInvitation, ItemClassType.Hidden, string.Empty));
             Add(new ItemTag(KnownItem.VenusLaunchAssistanceTicket, ItemClassType.Ticket, "Ticket: Venus Launch Assistance"));
             Add(new ItemTag(KnownItem.Chapter2, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.StationTransportUnlocked, ItemClassType.Hidden, string.Empty));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome1, ItemClassType.Ticket, "Ticket: Station Transport to Dome 1"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome2, ItemClassType.Ticket, "Ticket: Station Transport to Dome 2"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome3, ItemClassType.Ticket, "Ticket: Station Transport to Dome 3"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome4, ItemClassType.Ticket, "Ticket: Station Transport to Dome 4"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome5, ItemClassType.Ticket, "Ticket: Station Transport to Dome 5"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome6, ItemClassType.Ticket, "Ticket: Station Transport to Dome 6"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome7, ItemClassType.Ticket, "Ticket: Station Transport to Dome 7"));
+            Add(new ItemTag(KnownItem.StationTransportTicketDome8, ItemClassType.Ticket, "Ticket: Station Transport to Dome 8"));
         }
 
         /// <summary>

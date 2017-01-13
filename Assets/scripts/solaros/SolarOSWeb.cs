@@ -25,11 +25,23 @@
         private string currentWebsite;
 
         /// <summary>
+        /// Current Webpage text
+        /// </summary>
+        private string currentWebContent;
+
+        /// <summary>
+        /// Login Webpage text
+        /// </summary>
+        private string loginPageContent;
+
+        /// <summary>
         /// constructor
         /// </summary>
         /// <param name="os"></param>
         public SolarOSWeb(SolarOS os) : base(os)
         {
+            currentWebContent = string.Empty;
+
             InitBookmarks();
             InitLogin();
         }
@@ -56,6 +68,7 @@
             parentOS.ConsoleOutput.text =
                 parentOS.OSTxt(appTitle) +
                 description +
+                currentWebContent +
                 MenuOptionsTxt();
         }
 
@@ -67,50 +80,35 @@
             if (parentOS.CurrentApplication.Description == "api.voasis.venus")
             {
                 currentWebsite = parentOS.CurrentApplication.Description;
+                currentWebContent = loginPageContent;
 
                 parentOS.MenuItems = loginpage;
             }
             else if (bookmarks.Contains(parentOS.CurrentApplication))
             {
-                LoadTextFileAsMenu(parentOS.CurrentApplication.Description);
+                parentOS.MenuItems = new List<SolarOSMenuItem>();
+
+                LoadTextFileAsWebPage(parentOS.CurrentApplication.Description);
 
                 if (currentWebsite == "tickets.venus")
                 {
                     var playerInventory = PlayerInventory.Instance();
-                    if (!playerInventory.ContainsItem(KnownItem.VenrefInterrogated))
+
+                    if (!playerInventory.ContainsItem(KnownItem.StationTransportTicketDome1))
                     {
-                        parentOS.MenuItems.Add(new SolarOSMenuItem("[ ] no tickets available, please check back later"));
+                        StationTransportTicketOption(playerInventory);
                     }
-                    else if (!playerInventory.ContainsItem(KnownItem.VenusLaunchAssistanceTicket))
+
+                    if (!playerInventory.ContainsItem(KnownItem.VenusLaunchAssistanceTicket))
                     {
-                        var playerWallet = PlayerWallet.Instance();
-                        var ticketprice = 100;
-                        if (playerWallet.GetAmount() >= 100)
-                        {
-                            parentOS.MenuItems.Add(
-                                new SolarOSMenuItem(
-                                    "[x] buy launch assistance ticket (" + ticketprice + " solarbits)",
-                                    () =>
-                                    {
-                                        playerWallet.Transfer(ticketprice, new SolarbitsWallet());
-                                        KnownItemsInventory.Instance().TransferItem(KnownItem.VenusLaunchAssistanceTicket, playerInventory);
-
-                                        parentOS.CurrentApplication = parentOS.PopPreviousApplicationBreadcrumb();
-
-                                        Run();
-                                    },
-                                    RefreshDisplay));
-                        }
-                        else
-                        {
-                            parentOS.MenuItems.Add(new SolarOSMenuItem("[ ] buy launch assistance ticket (" + ticketprice + " solarbits)"));
-                        }
+                        LaunchAssistanceTicketOption(playerInventory);
                     }
                 }
             }
             else
             {
                 currentWebsite = string.Empty;
+                currentWebContent = string.Empty;
                 parentOS.MenuItems = bookmarks;
             }
         }
@@ -125,34 +123,87 @@
             {
                 return base.MenuOptionsTxt();
             }
-            else if (IsOnLoginpage())
-            {
-                string menuOptions = string.Empty;
-
-                foreach (var menuItem in parentOS.MenuItems)
-                {
-                    if ((parentOS.SelectedMenuItem == menuItem) && !menuItem.Description.StartsWith("[x]"))
-                    {
-                        menuOptions += "[x] " + menuItem.Description + "\n";
-                    }
-                    else
-                    {
-                        menuOptions += menuItem.Description + "\n";
-                    }
-                }
-
-                return menuOptions;
-            }
             else
             {
                 string menuOptions = string.Empty;
 
                 foreach (var menuItem in parentOS.MenuItems)
                 {
-                    menuOptions += menuItem.Description + "\n";
+                    if (!menuItem.IsEnabled)
+                    {
+                        menuOptions += "[-] " + menuItem.Description + "\n";
+                    }
+                    else if (parentOS.SelectedMenuItem == menuItem)
+                    {
+                        menuOptions += "[x] " + menuItem.Description + "\n";
+                    }
+                    else
+                    {
+                        menuOptions += "[ ] " + menuItem.Description + "\n";
+                    }
                 }
 
                 return menuOptions;
+            }
+        }
+
+        /// <summary>
+        /// Adds option for a Station Transport ticket
+        /// </summary>
+        /// <param name="playerInventory"></param>
+        private void StationTransportTicketOption(PlayerInventory playerInventory)
+        {
+            var playerWallet = PlayerWallet.Instance();
+            var ticketprice = 10;
+            if (playerInventory.ContainsItem(KnownItem.StationTransportUnlocked) && (playerWallet.GetAmount() >= ticketprice))
+            {
+                parentOS.MenuItems.Add(
+                    new SolarOSMenuItem(
+                        "buy station transport ticket to dome 1 (" + ticketprice + " solarbits)",
+                        () =>
+                        {
+                            playerWallet.Transfer(ticketprice, new SolarbitsWallet());
+                            KnownItemsInventory.Instance().TransferItem(KnownItem.StationTransportTicketDome1, playerInventory);
+
+                            parentOS.CurrentApplication = parentOS.PopPreviousApplicationBreadcrumb();
+
+                            Run();
+                        },
+                        RefreshDisplay));
+            }
+            else
+            {
+                parentOS.MenuItems.Add(new SolarOSMenuItem("buy station transport ticket (" + ticketprice + " solarbits)\n", false));
+            }
+        }
+
+        /// <summary>
+        /// Adds option for a Launch Assistance ticket
+        /// </summary>
+        /// <param name="playerInventory"></param>
+        private void LaunchAssistanceTicketOption(PlayerInventory playerInventory)
+        {
+            var playerWallet = PlayerWallet.Instance();
+            var ticketprice = 100;
+            if (playerInventory.ContainsItem(KnownItem.VenrefInterrogated) && (playerWallet.GetAmount() >= ticketprice))
+            {
+                parentOS.MenuItems.Add(
+                    new SolarOSMenuItem(
+                        "buy launch assistance ticket (" + ticketprice + " solarbits)",
+                        () =>
+                        {
+                            playerWallet.Transfer(ticketprice, new SolarbitsWallet());
+                            KnownItemsInventory.Instance().TransferItem(KnownItem.VenusLaunchAssistanceTicket, playerInventory);
+
+                            parentOS.CurrentApplication = parentOS.PopPreviousApplicationBreadcrumb();
+
+                            Run();
+                        },
+                        RefreshDisplay));
+            }
+            else
+            {
+                parentOS.MenuItems.Add(new SolarOSMenuItem("buy launch assistance ticket (" + ticketprice + " solarbits)\n", false));
             }
         }
 
@@ -184,22 +235,26 @@
             var playerInventory = PlayerInventory.Instance();
             if (parentOS.NetworkIsOnVenus() && playerInventory.ContainsItem(KnownItem.VoasisCredentials))
             {
-                loginpage.Add(new SolarOSMenuItem("username: admin"));
-                loginpage.Add(new SolarOSMenuItem("password: ***"));
+                loginPageContent =
+                    "username: admin\n" +
+                    "password: ***\n";
                 loginpage.Add(new SolarOSMenuItem(
-                    "[x] login",
+                    "login",
                     () =>
                     {
                         KnownItemsInventory.Instance().TransferItem(KnownItem.VoasisWebsiteCredentialsUsage, playerInventory);
-                        LoadTextFileAsMenu(currentWebsite);
+                        parentOS.MenuItems = new List<SolarOSMenuItem>();
+                        LoadTextFileAsWebPage(currentWebsite);
                     },
                     RefreshDisplay));
             }
             else
             {
-                loginpage.Add(new SolarOSMenuItem("username:"));
-                loginpage.Add(new SolarOSMenuItem("password:"));
-                loginpage.Add(new SolarOSMenuItem("Need login credentials"));
+                loginPageContent =
+                    "username:\n" +
+                    "password:\n";
+
+                loginpage.Add(new SolarOSMenuItem("Need login credentials", false));
             }
         }
 
@@ -230,9 +285,9 @@
             {
                 parentOS.InitSelection();
             }
-            else if (LastItemIsSelectable())
+            else if (parentOS.MenuItems.Count > 0)
             {
-                parentOS.SelectedMenuItem = GetLastMenuItem();
+                parentOS.InitSelection();
             }
             else
             {
@@ -241,46 +296,14 @@
         }
 
         /// <summary>
-        /// Returns the last menuitem in the current menuitem list, if length 0 return null
-        /// </summary>
-        /// <returns>SolarOSMenuItem</returns>
-        private SolarOSMenuItem GetLastMenuItem()
-        {
-            if (parentOS.MenuItems.Count > 0)
-            {
-                return parentOS.MenuItems[parentOS.MenuItems.Count - 1];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// If the last menu item has [x] in the description
-        /// </summary>
-        /// <returns>bool</returns>
-        private bool LastItemIsSelectable()
-        {
-            if (parentOS.MenuItems.Count > 0)
-            {
-                return parentOS.MenuItems[parentOS.MenuItems.Count - 1].Description.StartsWith("[x]");
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Loads a textfile from the resources as a menu
         /// </summary>
         /// <param name="resourceName">string</param>
-        private void LoadTextFileAsMenu(string resourceName)
+        private void LoadTextFileAsWebPage(string resourceName)
         {
             currentWebsite = resourceName;
 
-            var menu = new List<SolarOSMenuItem>();
+            currentWebContent = string.Empty;
 
             var scriptText = Resources.Load(resourceName) as TextAsset;
             var stringSeparators = new string[] { "\r\n", "\r", "\n" };
@@ -288,10 +311,8 @@
 
             foreach (var line in result)
             {
-                menu.Add(new SolarOSMenuItem(line.ToLower()));
+                currentWebContent += line.ToLower() + "\n";
             }
-
-            parentOS.MenuItems = menu;
         }
     }
 }

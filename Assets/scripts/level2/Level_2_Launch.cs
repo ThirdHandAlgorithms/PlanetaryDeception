@@ -41,12 +41,42 @@
                 {
                     if (playerInventory.ContainsItem(KnownItem.VenusLaunchAssistanceTicket))
                     {
+                        KnownItemsInventory.Instance().TransferItem(KnownItem.Chapter2, playerInventory);
+
                         SceneManager.LoadScene("Level_EndOfDemo");
                         return;
                     }
                     else
                     {
                         AlertText.text = "You require a Launch Assistance ticket";
+                    }
+                }
+                else if (PlayerIsTouching("StationTransport"))
+                {
+                    if (playerInventory.ContainsItem(KnownItem.StationTransportTicketDome1))
+                    {
+                        SceneManager.LoadScene("Level_3");
+                        return;
+                    }
+                    else if (playerInventory.ContainsItem(KnownItem.StationTransportTicketDome2))
+                    {
+                        AlertText.text = "You're already on Station Dome 2";
+                    }
+                    else if (playerInventory.ContainsOneItem(new KnownItem[]
+                    {
+                        KnownItem.StationTransportTicketDome3,
+                        KnownItem.StationTransportTicketDome4,
+                        KnownItem.StationTransportTicketDome5,
+                        KnownItem.StationTransportTicketDome6,
+                        KnownItem.StationTransportTicketDome7,
+                        KnownItem.StationTransportTicketDome8
+                    }))
+                    {
+                        AlertText.text = "Travel temporarily suspended";
+                    }
+                    else
+                    {
+                        AlertText.text = "You require a Station Transport ticket";
                     }
                 }
             }

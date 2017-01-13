@@ -73,24 +73,27 @@
         /// </summary>
         private void FixedUpdate()
         {
-            var horizontalAxis = Input.GetAxis("Horizontal");
-
-            // Multiple Ifs since you can press multiple keys in the same frameupdate
-            if (horizontalAxis < 0)
+            if (StandardSpeed > 0)
             {
-                transform.position += Vector3.left * StandardSpeed * Time.deltaTime;
-                if (CharacterFacingRight)
+                var horizontalAxis = Input.GetAxis("Horizontal");
+
+                // Multiple Ifs since you can press multiple keys in the same frameupdate
+                if (horizontalAxis < 0)
                 {
-                    FlipCharacter();
+                    transform.position += Vector3.left * StandardSpeed * Time.deltaTime;
+                    if (CharacterFacingRight)
+                    {
+                        FlipCharacter();
+                    }
                 }
-            }
 
-            if (horizontalAxis > 0)
-            {
-                transform.position += Vector3.right * StandardSpeed * Time.deltaTime;
-                if (!CharacterFacingRight)
+                if (horizontalAxis > 0)
                 {
-                    FlipCharacter();
+                    transform.position += Vector3.right * StandardSpeed * Time.deltaTime;
+                    if (!CharacterFacingRight)
+                    {
+                        FlipCharacter();
+                    }
                 }
             }
         }

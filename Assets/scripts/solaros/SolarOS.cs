@@ -32,6 +32,16 @@
         public SolarOSMenuItem CurrentApplication;
 
         /// <summary>
+        /// Allow automatic exit if you go back from the main menu
+        /// </summary>
+        public bool AllowExit = true;
+
+        /// <summary>
+        /// Allow to go back a menu with Fire2
+        /// </summary>
+        public bool AllowGoingBack = true;
+
+        /// <summary>
         /// The current by the user selected menu item
         /// </summary>
         public SolarOSMenuItem SelectedMenuItem;
@@ -111,18 +121,21 @@
                         RunMenuItem(selected);
                     }
                 }
-                else if (Input.GetButtonUp("Fire2"))
+                else if (AllowGoingBack && Input.GetButtonUp("Fire2"))
                 {
                     ScrollToTop();
 
                     var lastBreadcrumb = PopPreviousApplicationBreadcrumb();
                     if ((lastBreadcrumb == null) && (CurrentApplication == null))
                     {
-                        var currentScene = SceneManager.GetActiveScene();
-                        var currentSceneName = currentScene.name;
-                        var parentSceneName = currentSceneName.Substring(0, currentSceneName.LastIndexOf('_'));
-                        SceneManager.LoadScene(parentSceneName);
-                        return;
+                        if (AllowExit)
+                        {
+                            var currentScene = SceneManager.GetActiveScene();
+                            var currentSceneName = currentScene.name;
+                            var parentSceneName = currentSceneName.Substring(0, currentSceneName.LastIndexOf('_'));
+                            SceneManager.LoadScene(parentSceneName);
+                            return;
+                        }
                     }
                     else
                     {
@@ -219,6 +232,11 @@
             if (HasItems() && ((SelectedMenuItem == null) || !MenuItems.Contains(SelectedMenuItem)))
             {
                 SelectedMenuItem = MenuItems[0];
+                if (!SelectedMenuItem.IsEnabled)
+                {
+                    // skip all disabled menuitems
+                    MoveSelectionDown();
+                }
             }
         }
 
@@ -227,7 +245,7 @@
         /// </summary>
         /// <param name="optionalAppName">string</param>
         /// <returns>string</returns>
-        public string OSTxt(string optionalAppName = "")
+        public virtual string OSTxt(string optionalAppName = "")
         {
             string txt =
                 "Solar OS V3.2" +
@@ -246,7 +264,10 @@
         /// </summary>
         protected void ScrollToTop()
         {
-            ConsoleScrollRect.verticalNormalizedPosition = 1;
+            if (ConsoleScrollRect != null)
+            {
+                ConsoleScrollRect.verticalNormalizedPosition = 1;
+            }
         }
 
         /// <summary>
@@ -359,7 +380,7 @@
         /// Return menu header
         /// </summary>
         /// <returns>string</returns>
-        protected string MenuTxt()
+        protected virtual string MenuTxt()
         {
             return "Available functions:\n";
         }
@@ -374,7 +395,11 @@
 
             foreach (var menuItem in MenuItems)
             {
-                if (menuItem == SelectedMenuItem)
+                if (!menuItem.IsEnabled)
+                {
+                    menuOptions += "[-]";
+                }
+                else if (menuItem == SelectedMenuItem)
                 {
                     menuOptions += "[x]";
                 }
@@ -411,9 +436,21 @@
             if (currentSelection != null)
             {
                 var itemIndex = MenuItems.IndexOf(currentSelection);
-                if (itemIndex > 0)
+                itemIndex--;
+
+                while (itemIndex >= 0)
                 {
-                    SelectedMenuItem = MenuItems[itemIndex - 1];
+                    var item = MenuItems[itemIndex];
+                    if (!item.IsEnabled)
+                    {
+                        // skip disabled menu items
+                        itemIndex--;
+                    }
+                    else
+                    {
+                        SelectedMenuItem = item;
+                        break;
+                    }
                 }
             }
         }
@@ -427,9 +464,20 @@
             if (currentSelection != null)
             {
                 var itemIndex = MenuItems.IndexOf(currentSelection);
-                if (itemIndex < MenuItems.Count - 1)
+                itemIndex++;
+                while (itemIndex < MenuItems.Count)
                 {
-                    SelectedMenuItem = MenuItems[itemIndex + 1];
+                    var item = MenuItems[itemIndex];
+                    if (!item.IsEnabled)
+                    {
+                        // skip disabled menu items
+                        itemIndex++;
+                    }
+                    else
+                    {
+                        SelectedMenuItem = item;
+                        break;
+                    }
                 }
             }
         }
