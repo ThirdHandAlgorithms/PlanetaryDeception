@@ -21,13 +21,21 @@
         public TinyOS OS;
 
         /// <summary>
-        /// Start
+        /// are the questions set
         /// </summary>
-        public override void Start()
-        {
-            base.Start();
+        private bool questionsInitialized = false;
 
-            InitQuestions();
+        /// <summary>
+        /// Update
+        /// </summary>
+        public void Update()
+        {
+            // Order of executing Start() on TinyOS seems to be After the Level is Started for some reason...
+            if (OS.IsStarted && !questionsInitialized)
+            {
+                InitQuestions();
+                questionsInitialized = true;
+            }
         }
 
         /// <summary>

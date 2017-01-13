@@ -42,6 +42,11 @@
         public bool AllowGoingBack = true;
 
         /// <summary>
+        /// IsStarted
+        /// </summary>
+        public bool IsStarted { get; set; }
+
+        /// <summary>
         /// The current by the user selected menu item
         /// </summary>
         public SolarOSMenuItem SelectedMenuItem;
@@ -90,6 +95,8 @@
 
             breadCrumbs = new List<SolarOSMenuItem>();
             LoadMainMenu();
+
+            IsStarted = true;
         }
 
         /// <summary>
