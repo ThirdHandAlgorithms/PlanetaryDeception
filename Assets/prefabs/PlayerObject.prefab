@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 114723969203695440}
   - component: {fileID: 61068673618888218}
   - component: {fileID: 50311650551736408}
+  - component: {fileID: 95130234918959236}
   m_Layer: 0
   m_Name: PlayerObject
   m_TagString: Untagged
@@ -126,6 +127,7 @@ GameObject:
   - component: {fileID: 124499185648209466}
   - component: {fileID: 81073353957294354}
   - component: {fileID: 45088154272877826}
+  - component: {fileID: 114766524702218344}
   m_Layer: 0
   m_Name: VenusCamera
   m_TagString: MainCamera
@@ -197,7 +199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1226206382522360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.271, y: 0.287, z: 0}
+  m_LocalPosition: {x: -0.056, y: 0.326, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4064989632793124}
@@ -282,19 +284,19 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1226206382522360}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 2
+  m_Constraints: 6
 --- !u!61 &61068673618888218
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -323,6 +325,23 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684587404546134}
   m_Enabled: 1
+--- !u!95 &95130234918959236
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1226206382522360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 88aef2ed53d35cd4c81d27d7d30428f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114266163604871370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -355,7 +374,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hello
+  m_Text: 
 --- !u!114 &114542602953112426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -391,6 +410,18 @@ MonoBehaviour:
   OutfitSprite: {fileID: 212595289173600698}
   HairSprite: {fileID: 212660829181053684}
   AccessorySprite: {fileID: 212388391925050832}
+--- !u!114 &114766524702218344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684587404546134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435effb9f2ffa6848b91b8a812230789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlertText: {fileID: 114266163604871370}
 --- !u!114 &114823611834252244
 MonoBehaviour:
   m_ObjectHideFlags: 1

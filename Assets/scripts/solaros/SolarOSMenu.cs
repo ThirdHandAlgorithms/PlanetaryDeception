@@ -31,6 +31,11 @@
         public DisplayApplication OnDisplay;
 
         /// <summary>
+        /// Is enabled?
+        /// </summary>
+        public bool IsEnabled;
+
+        /// <summary>
         /// Constructor menuitem
         /// </summary>
         /// <param name="description"></param>
@@ -41,17 +46,20 @@
             Description = description;
             OnRunApplication = onRun;
             OnDisplay = onDisplay;
+            IsEnabled = true;
         }
 
         /// <summary>
         /// Constructor2 menuitem
         /// </summary>
         /// <param name="description"></param>
-        public SolarOSMenuItem(string description)
+        /// /// <param name="enabled"></param>
+        public SolarOSMenuItem(string description, bool enabled = true)
         {
             Description = description;
             OnRunApplication = null;
             OnDisplay = null;
+            IsEnabled = enabled;
         }
 
         /// <summary>
@@ -64,6 +72,7 @@
             Description = description;
             OnRunApplication = application.Run;
             OnDisplay = application.RefreshDisplay;
+            IsEnabled = true;
         }
     }
 }

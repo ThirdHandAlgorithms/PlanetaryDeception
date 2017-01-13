@@ -15,3 +15,15 @@ EditorBuildSettings:
     path: Assets/scenes/Level_1_console.unity
   - enabled: 1
     path: Assets/scenes/Level_2.unity
+  - enabled: 1
+    path: Assets/scenes/Level_2_launch.unity
+  - enabled: 1
+    path: Assets/scenes/Level_2_launch_console.unity
+  - enabled: 1
+    path: Assets/scenes/Level_EndOfDemo.unity
+  - enabled: 0
+    path: Assets/scenes/Level_1a.unity
+  - enabled: 1
+    path: Assets/scenes/Level_2_interrogation.unity
+  - enabled: 1
+    path: Assets/scenes/Level_3.unity

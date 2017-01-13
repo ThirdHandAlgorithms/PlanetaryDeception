@@ -19,15 +19,6 @@
         protected static LevelBase currentInstance = null;
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        public LevelBase()
-        {
-            PlayerInContactWith = null;
-            currentInstance = this;
-        }
-
-        /// <summary>
         /// Indication of what the Player is currently touching
         /// </summary>
         public GameObject PlayerInContactWith { get; set; }
@@ -39,6 +30,15 @@
         public static LevelBase CurrentLevel()
         {
             return currentInstance;
+        }
+
+        /// <summary>
+        /// Level start, if you reimplement Start, you need to manually execute this
+        /// </summary>
+        public virtual void Start()
+        {
+            PlayerInContactWith = null;
+            currentInstance = this;
         }
 
         /// <summary>
