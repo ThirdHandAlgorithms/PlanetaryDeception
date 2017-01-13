@@ -20,7 +20,8 @@
                 {
                     if (playerInventory.ContainsItem(KnownItem.PlayerSecurityAccessCard))
                     {
-                        SceneManager.LoadScene("Level_2_launch_console");
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_2_launch_console", Player);
                         return;
                     }
                     else
@@ -30,7 +31,17 @@
                 }
                 else if (PlayerIsTouching("ExitDoor"))
                 {
-                    SceneManager.LoadScene("Level_2");
+                    if (playerInventory.ContainsItem(KnownItem.VoasisWebsiteCredentialsUsage) && !playerInventory.ContainsItem(KnownItem.VenrefInterrogated))
+                    {
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_2_interrogation", Player);
+                    }
+                    else
+                    {
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_2", Player);
+                    }
+
                     return;
                 }
                 else if (PlayerIsTouching("EmptyLauncher"))
@@ -43,7 +54,8 @@
                     {
                         KnownItemsInventory.Instance().TransferItem(KnownItem.Chapter2, playerInventory);
 
-                        SceneManager.LoadScene("Level_EndOfDemo");
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_EndOfDemo", Player);
                         return;
                     }
                     else
@@ -55,7 +67,8 @@
                 {
                     if (playerInventory.ContainsItem(KnownItem.StationTransportTicketDome1))
                     {
-                        SceneManager.LoadScene("Level_3");
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_3", Player);
                         return;
                     }
                     else if (playerInventory.ContainsItem(KnownItem.StationTransportTicketDome2))

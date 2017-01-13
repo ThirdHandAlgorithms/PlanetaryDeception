@@ -1,7 +1,6 @@
 ﻿namespace PlanetaryDeception
 {
     using UnityEngine;
-    using UnityEngine.SceneManagement;
 
     /// <summary>
     /// Level 2
@@ -27,7 +26,8 @@
                 {
                     if (playerInventory.ContainsItem(KnownItem.PlayerSecurityAccessCard))
                     {
-                        SceneManager.LoadScene("Level_1");
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_1", Player);
                         return;
                     }
                     else
@@ -37,7 +37,16 @@
                 }
                 else if (PlayerIsTouching("LaunchEntrance"))
                 {
-                    SceneManager.LoadScene("Level_2_launch");
+                    if (playerInventory.ContainsItem(KnownItem.VoasisWebsiteCredentialsUsage) && !playerInventory.ContainsItem(KnownItem.VenrefInterrogated))
+                    {
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_2_interrogation", Player);
+                    }
+                    else
+                    {
+                        var settings = CharacterSettings.Instance();
+                        settings.TransitionToNewScene("Level_2_launch", Player);
+                    }
                     return;
                 }
                 else if (PlayerIsTouching("ViteEntrance"))

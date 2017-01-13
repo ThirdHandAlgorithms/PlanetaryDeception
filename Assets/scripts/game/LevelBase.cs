@@ -14,6 +14,11 @@
         public Text AlertText;
 
         /// <summary>
+        /// PlayerObject
+        /// </summary>
+        public SpriteRenderer Player;
+
+        /// <summary>
         /// The last level that was instantiated
         /// </summary>
         protected static LevelBase currentInstance = null;

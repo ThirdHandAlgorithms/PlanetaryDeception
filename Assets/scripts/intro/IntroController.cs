@@ -1,7 +1,6 @@
 ﻿namespace PlanetaryDeception
 {
     using UnityEngine;
-    using UnityEngine.SceneManagement;
 
     /// <summary>
     /// Intro Controller.
@@ -16,7 +15,8 @@
         {
             if (Input.anyKey)
             {
-                SceneManager.LoadScene("CharacterCreation");
+                var settings = CharacterSettings.Instance();
+                settings.TransitionToNewScene("CharacterCreation", null);
             }
         }
     }

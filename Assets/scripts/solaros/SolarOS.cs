@@ -140,7 +140,8 @@
                             var currentScene = SceneManager.GetActiveScene();
                             var currentSceneName = currentScene.name;
                             var parentSceneName = currentSceneName.Substring(0, currentSceneName.LastIndexOf('_'));
-                            SceneManager.LoadScene(parentSceneName);
+                            var settings = CharacterSettings.Instance();
+                            settings.TransitionToNewScene(parentSceneName, null);
                             return;
                         }
                     }

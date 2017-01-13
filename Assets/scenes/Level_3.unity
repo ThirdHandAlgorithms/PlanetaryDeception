@@ -192,6 +192,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6465069987ec7ed41b590e5b9cda8c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlertText: {fileID: 592844022}
+  Player: {fileID: 592844023}
+--- !u!114 &592844022 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114266163604871370, guid: 2aba4169573ee5d4b878db9c4ce98167,
+    type: 2}
+  m_PrefabInternal: {fileID: 592844019}
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!212 &592844023 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212810548145609246, guid: 2aba4169573ee5d4b878db9c4ce98167,
+    type: 2}
+  m_PrefabInternal: {fileID: 592844019}
 --- !u!1001 &1306075800
 Prefab:
   m_ObjectHideFlags: 0

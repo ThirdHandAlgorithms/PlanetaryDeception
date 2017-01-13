@@ -66,6 +66,25 @@
             HairSprite.color = settings.HairColor;
             AccessorySprite.sprite = allAccessories[settings.Accessory];
             AccessorySprite.color = settings.AccessoryColor;
+
+            LoadCharacterPositionForThisScene();
+        }
+
+        /// <summary>
+        /// Load Character X, Y and flip
+        /// </summary>
+        private void LoadCharacterPositionForThisScene()
+        {
+            var sceneSettings = CharacterSettings.Instance().GetCurrentSceneSettings();
+            if (sceneSettings.PlayerPosIsSet)
+            {
+                transform.position = new Vector3(sceneSettings.PlayerPosX, sceneSettings.PlayerPosY, 0);
+
+                if (!sceneSettings.PlayerIsFacingRight)
+                {
+                    FlipCharacter();
+                }
+            }
         }
 
         /// <summary>

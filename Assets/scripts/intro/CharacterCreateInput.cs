@@ -1,9 +1,7 @@
 ﻿namespace PlanetaryDeception
 {
-    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.SceneManagement;
     using UnityEngine.UI;
 
     /// <summary>
@@ -32,6 +30,11 @@
         public SpriteRenderer AccessoryPreview;
 
         /// <summary>
+        /// Name
+        /// </summary>
+        public InputField NameInputField;
+
+        /// <summary>
         /// List of text controls
         /// </summary>
         private List<Text> controls;
@@ -45,6 +48,11 @@
         /// When the control/keyb input is allowed
         /// </summary>
         private float nextInputAllowed = 0.0f;
+
+        /// <summary>
+        /// Input Delay
+        /// </summary>
+        private const float inputDelay = 0.2f;
 
         /// <summary>
         /// List of sprite resources with hairstyles
@@ -139,7 +147,7 @@
             var allTexts = GetComponentsInChildren<Text>();
             foreach (var txt in allTexts)
             {
-                if (txt.name != "TextCC")
+                if ((txt.name != "TextCC") && (txt.name != "TextEntry") && (txt.name != "Placeholder"))
                 {
                     controls.Add(txt);
                 }
@@ -158,14 +166,26 @@
             SpriteRenderer currentPreview = null;
             Sprite[] currentSpriteArray = null;
             List<Color> currentColorArray = null;
-            float inputDelay = 0.2F;
 
-            if (Input.GetButton("Fire1") && (currentControl.name == "ButtonGO"))
+            bool fire = Input.GetButton("Fire1");
+            if (fire && (currentControl.name == "ButtonGO"))
             {
                 SaveCharacterSettings();
 
-                SceneManager.LoadScene("Level_1");
+                var settings = CharacterSettings.Instance();
+                settings.TransitionToNewScene("Level_1", null);
+
                 return;
+            }
+            else if (fire && (currentControl.name == "TextName"))
+            {
+                NameInputField.ActivateInputField();
+                NameInputField.Select();
+            }
+
+            if ((currentControl.name != "TextName") && (NameInputField.isFocused))
+            {
+                NameInputField.DeactivateInputField();
             }
 
             if (Time.time >= nextInputAllowed)
@@ -173,25 +193,11 @@
                 var verAxis = Input.GetAxis("Vertical");
                 if (verAxis > 0)
                 {
-                    var idx = controls.IndexOf(currentControl);
-                    if (idx > 0)
-                    {
-                        idx--;
-                        currentControl.color = Color.white;
-                        currentControl = controls[idx];
-                        nextInputAllowed = Time.time + inputDelay;
-                    }
+                    PrevControl();
                 }
                 else if (verAxis < 0)
                 {
-                    var idx = controls.IndexOf(currentControl);
-                    if (idx < controls.Count - 1)
-                    {
-                        idx++;
-                        currentControl.color = Color.white;
-                        currentControl = controls[idx];
-                        nextInputAllowed = Time.time + inputDelay;
-                    }
+                    NextControl();
                 }
 
                 var horAxis = Input.GetAxis("Horizontal");
@@ -318,6 +324,36 @@
         }
 
         /// <summary>
+        /// Focus the next control
+        /// </summary>
+        private void NextControl()
+        {
+            var idx = controls.IndexOf(currentControl);
+            if (idx < controls.Count - 1)
+            {
+                idx++;
+                currentControl.color = Color.white;
+                currentControl = controls[idx];
+                nextInputAllowed = Time.time + inputDelay;
+            }
+        }
+
+        /// <summary>
+        /// Focus the previous control
+        /// </summary>
+        private void PrevControl()
+        {
+            var idx = controls.IndexOf(currentControl);
+            if (idx > 0)
+            {
+                idx--;
+                currentControl.color = Color.white;
+                currentControl = controls[idx];
+                nextInputAllowed = Time.time + inputDelay;
+            }
+        }
+
+        /// <summary>
         /// Color from base-255 to floatbase color
         /// </summary>
         /// <param name="r">byte</param>
@@ -349,6 +385,8 @@
         private void SaveCharacterSettings()
         {
             var settings = CharacterSettings.Instance();
+
+            settings.Name = NameInputField.text;
 
             settings.SkinColor = SkinPreview.color;
 
