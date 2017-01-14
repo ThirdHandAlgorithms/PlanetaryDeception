@@ -42,6 +42,11 @@
         public bool AllowGoingBack = true;
 
         /// <summary>
+        /// IsStarted
+        /// </summary>
+        public bool IsStarted { get; set; }
+
+        /// <summary>
         /// The current by the user selected menu item
         /// </summary>
         public SolarOSMenuItem SelectedMenuItem;
@@ -90,6 +95,8 @@
 
             breadCrumbs = new List<SolarOSMenuItem>();
             LoadMainMenu();
+
+            IsStarted = true;
         }
 
         /// <summary>
@@ -133,7 +140,8 @@
                             var currentScene = SceneManager.GetActiveScene();
                             var currentSceneName = currentScene.name;
                             var parentSceneName = currentSceneName.Substring(0, currentSceneName.LastIndexOf('_'));
-                            SceneManager.LoadScene(parentSceneName);
+                            var settings = CharacterSettings.Instance();
+                            settings.TransitionToNewScene(parentSceneName, null);
                             return;
                         }
                     }

@@ -7,7 +7,7 @@
     /// <summary>
     /// Level 3
     /// </summary>
-    public class Level_3_Controller : LevelBase
+    public class LevelController_3 : LevelBase
     {
         /// <summary>
         /// Update

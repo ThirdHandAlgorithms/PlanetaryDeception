@@ -351,6 +351,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &618774830 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212810548145609246, guid: 2aba4169573ee5d4b878db9c4ce98167,
+    type: 2}
+  m_PrefabInternal: {fileID: 984611436}
 --- !u!1001 &790626837
 Prefab:
   m_ObjectHideFlags: 0
@@ -630,6 +635,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 114766524702218344, guid: 2aba4169573ee5d4b878db9c4ce98167,
+        type: 2}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 618774830}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2aba4169573ee5d4b878db9c4ce98167, type: 2}
   m_IsPrefabParent: 0

@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AlertText: {fileID: 471986443}
+  Player: {fileID: 471986444}
 --- !u!1001 &243889252
 Prefab:
   m_ObjectHideFlags: 0
@@ -541,6 +542,11 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 471986442}
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+--- !u!212 &471986444 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212810548145609246, guid: 2aba4169573ee5d4b878db9c4ce98167,
+    type: 2}
+  m_PrefabInternal: {fileID: 471986442}
 --- !u!1001 &493062992
 Prefab:
   m_ObjectHideFlags: 0
