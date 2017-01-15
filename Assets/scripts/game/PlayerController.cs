@@ -49,6 +49,11 @@
         public SpriteRenderer AccessorySprite;
 
         /// <summary>
+        /// outfitAnimName
+        /// </summary>
+        private string outfitAnimPrefix;
+
+        /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
@@ -66,6 +71,8 @@
             HairSprite.color = settings.HairColor;
             AccessorySprite.sprite = allAccessories[settings.Accessory];
             AccessorySprite.color = settings.AccessoryColor;
+
+            outfitAnimPrefix = "outfit" + settings.Outfit;
 
             LoadCharacterPositionForThisScene();
         }
@@ -96,6 +103,9 @@
             {
                 var horizontalAxis = Input.GetAxis("Horizontal");
 
+                var playerAnim = PlayerSprite.GetComponent<Animator>();
+                var outfitAnim = OutfitSprite.GetComponent<Animator>();
+
                 // Multiple Ifs since you can press multiple keys in the same frameupdate
                 if (horizontalAxis < 0)
                 {
@@ -104,15 +114,25 @@
                     {
                         FlipCharacter();
                     }
-                }
 
-                if (horizontalAxis > 0)
+                    playerAnim.Play("player_walking");
+                    outfitAnim.Play(outfitAnimPrefix + "_walking");
+                }
+                else if (horizontalAxis > 0)
                 {
                     transform.position += Vector3.right * StandardSpeed * Time.deltaTime;
                     if (!CharacterFacingRight)
                     {
                         FlipCharacter();
                     }
+
+                    playerAnim.Play("player_walking");
+                    outfitAnim.Play(outfitAnimPrefix + "_walking");
+                }
+                else
+                {
+                    playerAnim.Play("player_idle");
+                    outfitAnim.Play(outfitAnimPrefix + "_idle");
                 }
             }
         }
