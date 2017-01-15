@@ -54,6 +54,16 @@
         private string outfitAnimPrefix;
 
         /// <summary>
+        /// player animator
+        /// </summary>
+        private Animator playerAnim;
+
+        /// <summary>
+        /// outfit animator
+        /// </summary>
+        private Animator outfitAnim;
+
+        /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
@@ -73,6 +83,9 @@
             AccessorySprite.color = settings.AccessoryColor;
 
             outfitAnimPrefix = "outfit" + settings.Outfit;
+
+            playerAnim = PlayerSprite.GetComponent<Animator>();
+            outfitAnim = OutfitSprite.GetComponent<Animator>();
 
             LoadCharacterPositionForThisScene();
         }
@@ -103,9 +116,6 @@
             {
                 var horizontalAxis = Input.GetAxis("Horizontal");
 
-                var playerAnim = PlayerSprite.GetComponent<Animator>();
-                var outfitAnim = OutfitSprite.GetComponent<Animator>();
-
                 // Multiple Ifs since you can press multiple keys in the same frameupdate
                 if (horizontalAxis < 0)
                 {
@@ -134,6 +144,11 @@
                     playerAnim.Play("player_idle");
                     outfitAnim.Play(outfitAnimPrefix + "_idle");
                 }
+            }
+            else
+            {
+                playerAnim.Play("player_idle");
+                outfitAnim.Play(outfitAnimPrefix + "_idle");
             }
         }
 

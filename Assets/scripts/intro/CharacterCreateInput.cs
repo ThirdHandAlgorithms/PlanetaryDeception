@@ -332,7 +332,7 @@
             if (idx < controls.Count - 1)
             {
                 idx++;
-                currentControl.color = Color.white;
+                currentControl.color = Color.black;
                 currentControl = controls[idx];
                 nextInputAllowed = Time.time + inputDelay;
             }
@@ -347,7 +347,7 @@
             if (idx > 0)
             {
                 idx--;
-                currentControl.color = Color.white;
+                currentControl.color = Color.black;
                 currentControl = controls[idx];
                 nextInputAllowed = Time.time + inputDelay;
             }
