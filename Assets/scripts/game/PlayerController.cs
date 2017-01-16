@@ -49,6 +49,21 @@
         public SpriteRenderer AccessorySprite;
 
         /// <summary>
+        /// outfitAnimName
+        /// </summary>
+        private string outfitAnimPrefix;
+
+        /// <summary>
+        /// player animator
+        /// </summary>
+        private Animator playerAnim;
+
+        /// <summary>
+        /// outfit animator
+        /// </summary>
+        private Animator outfitAnim;
+
+        /// <summary>
         /// Starts the scene.
         /// </summary>
         private void Start()
@@ -66,6 +81,11 @@
             HairSprite.color = settings.HairColor;
             AccessorySprite.sprite = allAccessories[settings.Accessory];
             AccessorySprite.color = settings.AccessoryColor;
+
+            outfitAnimPrefix = "outfit" + settings.Outfit;
+
+            playerAnim = PlayerSprite.GetComponent<Animator>();
+            outfitAnim = OutfitSprite.GetComponent<Animator>();
 
             LoadCharacterPositionForThisScene();
         }
@@ -104,16 +124,31 @@
                     {
                         FlipCharacter();
                     }
-                }
 
-                if (horizontalAxis > 0)
+                    playerAnim.Play("player_walking");
+                    outfitAnim.Play(outfitAnimPrefix + "_walking");
+                }
+                else if (horizontalAxis > 0)
                 {
                     transform.position += Vector3.right * StandardSpeed * Time.deltaTime;
                     if (!CharacterFacingRight)
                     {
                         FlipCharacter();
                     }
+
+                    playerAnim.Play("player_walking");
+                    outfitAnim.Play(outfitAnimPrefix + "_walking");
                 }
+                else
+                {
+                    playerAnim.Play("player_idle");
+                    outfitAnim.Play(outfitAnimPrefix + "_idle");
+                }
+            }
+            else
+            {
+                playerAnim.Play("player_idle");
+                outfitAnim.Play(outfitAnimPrefix + "_idle");
             }
         }
 
