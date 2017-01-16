@@ -8,6 +8,11 @@
     public class LevelController_2 : LevelBase
     {
         /// <summary>
+        /// Q&A console for interaction
+        /// </summary>
+        public TinyOS QA;
+
+        /// <summary>
         /// Update Event handler
         /// </summary>
         public void Update()
@@ -53,9 +58,28 @@
                 {
                     AlertText.text = "The office is currently closed";
                 }
+                else if (PlayerIsTouching("NotSoUndercoverAgent"))
+                {
+                    AlertText.text = "Someone pretending to read a newspaper.";
+                }
                 else if (PlayerIsTouching("Flowershop"))
                 {
-                    AlertText.text = "The shopkeeper is not here";
+                    var group = QA.GetComponent<CanvasGroup>();
+                    if (group.alpha == 0)
+                    {
+                        group.alpha = 1;
+
+                        QA.NewQuestion(
+                            "I need dialog");
+
+                        QA.AddPossibleAnswer(
+                            "Me too",
+                            () =>
+                            {
+                                QA.Clear();
+                                group.alpha = 0;
+                            });
+                    }
                 }
             }
         }

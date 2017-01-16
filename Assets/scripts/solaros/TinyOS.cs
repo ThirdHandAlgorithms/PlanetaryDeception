@@ -35,6 +35,8 @@
             LoadMainMenu();
 
             currentQuestion = description;
+
+            nextInputAllowed = Time.time + 1f;
         }
 
         /// <summary>
@@ -45,6 +47,12 @@
         public void AddPossibleAnswer(string answer, RunApplication onAnswer)
         {
             MenuItems.Add(new SolarOSMenuItem(answer, onAnswer, RefreshDisplay));
+        }
+
+        public void Clear()
+        {
+            MenuItems.Clear();
+            currentQuestion = "";
         }
 
         /// <summary>

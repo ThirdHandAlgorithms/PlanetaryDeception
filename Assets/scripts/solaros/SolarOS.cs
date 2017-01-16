@@ -127,6 +127,8 @@
                     {
                         RunMenuItem(selected);
                     }
+
+                    nextInputAllowed = Time.time + 0.2F;
                 }
                 else if (AllowGoingBack && Input.GetButtonUp("Fire2"))
                 {
@@ -153,6 +155,8 @@
 
                         SelectItemWithSameDescription(reselectOption);
                     }
+
+                    nextInputAllowed = Time.time + 0.2F;
                 }
             }
 
@@ -352,7 +356,7 @@
         protected virtual void LoadVPNToWork()
         {
             MenuItems = new List<SolarOSMenuItem>();
-            MenuItems.Add(new SolarOSMenuItem("GIT", new SolarOSGIT(this)));
+            MenuItems.Add(new SolarOSMenuItem("source code", new SolarOSGIT(this)));
         }
         
         /// <summary>
@@ -400,6 +404,11 @@
         protected string MenuOptionsTxt()
         {
             string menuOptions = string.Empty;
+
+            if (MenuItems == null)
+            {
+                return menuOptions;
+            }
 
             foreach (var menuItem in MenuItems)
             {
