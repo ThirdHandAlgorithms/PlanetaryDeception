@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: af4c7849e6c2db5449e62e380ab47321
-timeCreated: 1484464615
+timeCreated: 1484513556
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -34,6 +34,11 @@ TextureImporter:
     21300054: housetiles_27
     21300056: housetiles_28
     21300058: housetiles_29
+    21300060: housetiles_30
+    21300062: housetiles_31
+    21300064: housetiles_32
+    21300066: housetiles_33
+    21300068: housetiles_34
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -103,12 +108,12 @@ TextureImporter:
       name: housetiles_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 321
+        x: 1
+        y: 397
         width: 64
-        height: 63
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -116,12 +121,12 @@ TextureImporter:
       name: housetiles_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 321
+        x: 67
+        y: 397
         width: 64
-        height: 63
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -129,12 +134,12 @@ TextureImporter:
       name: housetiles_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 321
+        x: 133
+        y: 397
         width: 64
-        height: 63
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -142,12 +147,12 @@ TextureImporter:
       name: housetiles_3
       rect:
         serializedVersion: 2
-        x: 193
-        y: 320
+        x: 199
+        y: 397
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -155,12 +160,12 @@ TextureImporter:
       name: housetiles_4
       rect:
         serializedVersion: 2
-        x: 256
-        y: 320
+        x: 265
+        y: 397
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -168,12 +173,12 @@ TextureImporter:
       name: housetiles_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 256
+        x: 1
+        y: 331
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -181,12 +186,12 @@ TextureImporter:
       name: housetiles_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 256
+        x: 67
+        y: 331
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -194,12 +199,12 @@ TextureImporter:
       name: housetiles_7
       rect:
         serializedVersion: 2
-        x: 128
-        y: 256
+        x: 133
+        y: 331
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -207,12 +212,12 @@ TextureImporter:
       name: housetiles_8
       rect:
         serializedVersion: 2
-        x: 192
-        y: 256
+        x: 199
+        y: 331
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -220,12 +225,12 @@ TextureImporter:
       name: housetiles_9
       rect:
         serializedVersion: 2
-        x: 256
-        y: 256
+        x: 265
+        y: 331
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -233,12 +238,12 @@ TextureImporter:
       name: housetiles_10
       rect:
         serializedVersion: 2
-        x: 0
-        y: 192
+        x: 1
+        y: 265
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -246,12 +251,12 @@ TextureImporter:
       name: housetiles_11
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
+        x: 67
+        y: 265
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -259,12 +264,12 @@ TextureImporter:
       name: housetiles_12
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
+        x: 133
+        y: 265
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -272,12 +277,12 @@ TextureImporter:
       name: housetiles_13
       rect:
         serializedVersion: 2
-        x: 192
-        y: 192
+        x: 199
+        y: 265
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -285,12 +290,12 @@ TextureImporter:
       name: housetiles_14
       rect:
         serializedVersion: 2
-        x: 256
-        y: 192
+        x: 265
+        y: 265
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -298,12 +303,12 @@ TextureImporter:
       name: housetiles_15
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 1
+        y: 199
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -311,12 +316,12 @@ TextureImporter:
       name: housetiles_16
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
+        x: 67
+        y: 199
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -324,12 +329,12 @@ TextureImporter:
       name: housetiles_17
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
+        x: 133
+        y: 199
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -337,12 +342,12 @@ TextureImporter:
       name: housetiles_18
       rect:
         serializedVersion: 2
-        x: 192
-        y: 128
+        x: 199
+        y: 199
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -350,12 +355,12 @@ TextureImporter:
       name: housetiles_19
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
+        x: 265
+        y: 199
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -363,12 +368,12 @@ TextureImporter:
       name: housetiles_20
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 1
+        y: 133
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -376,12 +381,12 @@ TextureImporter:
       name: housetiles_21
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
+        x: 67
+        y: 133
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -389,12 +394,12 @@ TextureImporter:
       name: housetiles_22
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
+        x: 133
+        y: 133
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -402,12 +407,12 @@ TextureImporter:
       name: housetiles_23
       rect:
         serializedVersion: 2
-        x: 192
-        y: 64
+        x: 199
+        y: 133
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -415,12 +420,12 @@ TextureImporter:
       name: housetiles_24
       rect:
         serializedVersion: 2
-        x: 256
-        y: 64
+        x: 265
+        y: 133
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -428,12 +433,12 @@ TextureImporter:
       name: housetiles_25
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 1
+        y: 67
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -441,12 +446,12 @@ TextureImporter:
       name: housetiles_26
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 67
+        y: 67
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -454,12 +459,12 @@ TextureImporter:
       name: housetiles_27
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 133
+        y: 67
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -467,12 +472,12 @@ TextureImporter:
       name: housetiles_28
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
+        x: 199
+        y: 67
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -480,12 +485,77 @@ TextureImporter:
       name: housetiles_29
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
+        x: 265
+        y: 67
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: housetiles_30
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: housetiles_31
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: housetiles_32
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: housetiles_33
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 1
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: housetiles_34
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 1
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

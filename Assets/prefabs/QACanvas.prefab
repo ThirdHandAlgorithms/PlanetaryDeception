@@ -56,6 +56,8 @@ GameObject:
   - component: {fileID: 223479741749193336}
   - component: {fileID: 114796325128091218}
   - component: {fileID: 114411073869549500}
+  - component: {fileID: 114704824553051306}
+  - component: {fileID: 225249129143308758}
   m_Layer: 5
   m_Name: QACanvas
   m_TagString: Untagged
@@ -139,6 +141,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114704824553051306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1506391389398550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d746b9243ddad084ebec00c85e02c56b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlertText: {fileID: 0}
+  Player: {fileID: 0}
+  ConsoleOutput: {fileID: 114328422116164558}
+  ConsoleScrollRect: {fileID: 0}
+  Network: 1
+  AllowExit: 0
+  AllowGoingBack: 0
 --- !u!114 &114796325128091218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -247,3 +267,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 165}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &225249129143308758
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1506391389398550}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
