@@ -21,7 +21,7 @@
         /// Constructor
         /// </summary>
         /// <param name="os"></param>
-        public SolarOSSocialMedia(SolarOS os) : base(os)
+        public SolarOSSocialMedia(ISolarOS os) : base(os)
         {
             InitDMs();
             InitPublic();
@@ -34,9 +34,10 @@
         {
             InitSelection();
 
-            parentOS.ConsoleOutput.text =
+            parentOS.SetConsoleText(
                 parentOS.OSTxt("social media") +
-                MenuOptionsTxt();
+                MenuOptionsTxt()
+            );
 
             if (IsLookingAtDMs())
             {

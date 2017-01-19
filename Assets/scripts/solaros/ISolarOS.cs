@@ -7,6 +7,8 @@
         bool IsStarted { get; set; }
         List<SolarOSMenuItem> MenuItems { get; set; }
         SolarOSMenuItem SelectedMenuItem { get; set; }
+        SolarOSMenuItem CurrentApplication { get; set; }
+        SolarOS.SolarOSNetwork Network { get; set; }
 
         void SelectItemWithSameDescription(SolarOSMenuItem reselectItem);
         bool NetworkIsOnVenus();
@@ -15,5 +17,7 @@
         bool HasItems();
         void InitSelection();
         string OSTxt(string optionalAppName = "");
+
+        void SetConsoleText(string text);
     }
 }

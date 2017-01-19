@@ -18,7 +18,7 @@
         /// constructor
         /// </summary>
         /// <param name="os"></param>
-        public SolarOSGIT(SolarOS os) : base(os)
+        public SolarOSGIT(ISolarOS os) : base(os)
         {
             mainMenu = new List<SolarOSMenuItem>();
             mainMenu.Add(new SolarOSMenuItem("latest code review request", this));
@@ -37,10 +37,11 @@
                 description = "select noteworthy lines of code...\n";
             }
 
-            parentOS.ConsoleOutput.text =
+            parentOS.SetConsoleText(
                 parentOS.OSTxt("vite git repo") +
                 description +
-                MenuOptionsTxt();
+                MenuOptionsTxt()
+            );
         }
 
         /// <summary>

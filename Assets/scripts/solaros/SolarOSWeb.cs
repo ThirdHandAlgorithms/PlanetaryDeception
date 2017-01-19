@@ -65,11 +65,12 @@
                 appTitle += " - " + currentWebsite;
             }
 
-            parentOS.ConsoleOutput.text =
+            parentOS.SetConsoleText(
                 parentOS.OSTxt(appTitle) +
                 description +
                 currentWebContent +
-                MenuOptionsTxt();
+                MenuOptionsTxt()
+            );
         }
 
         /// <summary>
