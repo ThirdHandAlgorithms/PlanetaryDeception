@@ -8,13 +8,13 @@
         /// <summary>
         /// Initialized by caller SolarOS
         /// </summary>
-        protected SolarOS parentOS;
+        protected ISolarOS parentOS;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="os"></param>
-        public SolarOSApplication(SolarOS os)
+        public SolarOSApplication(ISolarOS os)
         {
             parentOS = os;
         }
