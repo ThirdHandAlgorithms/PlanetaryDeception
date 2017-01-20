@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-     ///test
     public interface ISolarOS
     {
         bool IsStarted { get; set; }
