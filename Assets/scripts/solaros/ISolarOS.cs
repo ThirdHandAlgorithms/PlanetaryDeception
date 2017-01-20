@@ -9,7 +9,7 @@
         List<SolarOSMenuItem> MenuItems { get; set; }
         SolarOSMenuItem SelectedMenuItem { get; set; }
         SolarOSMenuItem CurrentApplication { get; set; }
-        SolarOS.SolarOSNetwork Network { get; set; }
+        SolarOSNetwork Network { get; set; }
 
         void SelectItemWithSameDescription(SolarOSMenuItem reselectItem);
         bool NetworkIsOnVenus();

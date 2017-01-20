@@ -101,7 +101,7 @@
         {
             directMessages = new List<SolarOSMenuItem>();
 
-            if ((parentOS.Network & SolarOS.SolarOSNetwork.Venus) > 0)
+            if ((parentOS.Network & SolarOSNetwork.Venus) > 0)
             {
                 InitVenusDMs();
             }
@@ -138,7 +138,7 @@
 
             publicMessages.Add(new SolarOSMenuItem("Direct messages", Run, RefreshDisplay));
 
-            if ((parentOS.Network & SolarOS.SolarOSNetwork.Venus) > 0)
+            if ((parentOS.Network & SolarOSNetwork.Venus) > 0)
             {
                 InitVenusPublic();
             }

@@ -62,26 +62,6 @@
         protected List<SolarOSMenuItem> breadCrumbs;
 
         /// <summary>
-        /// Possible Networks
-        /// </summary>
-        public enum SolarOSNetwork
-        {
-            Space = 0,
-
-            Venus = 1,
-            VenusHome = 3,
-            Venref = 5,
-
-            EarthMoon = 8,
-
-            Mars = 16,
-
-            Ceres = 24,
-
-            Europa = 32
-        }
-
-        /// <summary>
         /// Current menu's menuitems
         /// </summary>
         public List<SolarOSMenuItem> MenuItems { get; set; }

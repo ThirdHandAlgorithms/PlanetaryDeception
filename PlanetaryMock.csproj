@@ -44,6 +44,7 @@
     <Compile Include="Assets\scripts\game\LevelBase.cs" />
     <Compile Include="Assets\scripts\solaros\ISolarOS.cs" />
     <Compile Include="Assets\scripts\solaros\SolarOSApplication.cs" />
+    <Compile Include="Assets\scripts\solaros\SolarOSNetwork.cs" />
     <Compile Include="Mocks\UnityEngine.cs" />
     <Compile Include="Mocks\UnityEngineSceneManagement.cs" />
     <Compile Include="Mocks\UnityEngineUI.cs" />
