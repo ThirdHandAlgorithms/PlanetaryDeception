@@ -21,7 +21,7 @@
         /// Constructor
         /// </summary>
         /// <param name="os"></param>
-        public SolarOSSocialMedia(SolarOS os) : base(os)
+        public SolarOSSocialMedia(ISolarOS os) : base(os)
         {
             InitDMs();
             InitPublic();
@@ -34,9 +34,10 @@
         {
             InitSelection();
 
-            parentOS.ConsoleOutput.text =
+            parentOS.SetConsoleText(
                 parentOS.OSTxt("social media") +
-                MenuOptionsTxt();
+                MenuOptionsTxt()
+            );
 
             if (IsLookingAtDMs())
             {
@@ -100,7 +101,7 @@
         {
             directMessages = new List<SolarOSMenuItem>();
 
-            if ((parentOS.Network & SolarOS.SolarOSNetwork.Venus) > 0)
+            if ((parentOS.Network & SolarOSNetwork.Venus) > 0)
             {
                 InitVenusDMs();
             }
@@ -137,7 +138,7 @@
 
             publicMessages.Add(new SolarOSMenuItem("Direct messages", Run, RefreshDisplay));
 
-            if ((parentOS.Network & SolarOS.SolarOSNetwork.Venus) > 0)
+            if ((parentOS.Network & SolarOSNetwork.Venus) > 0)
             {
                 InitVenusPublic();
             }

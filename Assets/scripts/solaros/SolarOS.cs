@@ -9,7 +9,7 @@
     /// <summary>
     /// SolarOS
     /// </summary>
-    public class SolarOS : LevelBase
+    public class SolarOS : LevelBase, ISolarOS
     {
         /// <summary>
         /// The Text field for the OS output
@@ -24,12 +24,12 @@
         /// <summary>
         /// Current Network the console is connected to
         /// </summary>
-        public SolarOSNetwork Network;
+        public SolarOSNetwork Network { get; set; }
 
         /// <summary>
         /// The currently running application
         /// </summary>
-        public SolarOSMenuItem CurrentApplication;
+        public SolarOSMenuItem CurrentApplication { get; set; }
 
         /// <summary>
         /// Allow automatic exit if you go back from the main menu
@@ -49,7 +49,7 @@
         /// <summary>
         /// The current by the user selected menu item
         /// </summary>
-        public SolarOSMenuItem SelectedMenuItem;
+        public SolarOSMenuItem SelectedMenuItem { get; set; }
 
         /// <summary>
         /// delay helper vars
@@ -62,29 +62,18 @@
         protected List<SolarOSMenuItem> breadCrumbs;
 
         /// <summary>
-        /// Possible Networks
-        /// </summary>
-        public enum SolarOSNetwork
-        {
-            Space = 0,
-
-            Venus = 1,
-            VenusHome = 3,
-            Venref = 5,
-
-            EarthMoon = 8,
-
-            Mars = 16,
-
-            Ceres = 24,
-
-            Europa = 32
-        }
-
-        /// <summary>
         /// Current menu's menuitems
         /// </summary>
         public List<SolarOSMenuItem> MenuItems { get; set; }
+
+        /// <summary>
+        /// Set Console output
+        /// </summary>
+        /// <param name="text"></param>
+        public void SetConsoleText(string text)
+        {
+            ConsoleOutput.text = text;
+        }
 
         /// <summary>
         /// Unity start
