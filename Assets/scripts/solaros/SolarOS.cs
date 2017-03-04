@@ -21,10 +21,23 @@
         /// </summary>
         public ScrollRect ConsoleScrollRect;
 
+        public SolarOSNetwork NetworkEnvironment;
+
         /// <summary>
         /// Current Network the console is connected to
         /// </summary>
-        public SolarOSNetwork Network { get; set; }
+        public SolarOSNetwork Network
+        {
+            get
+            {
+                return NetworkEnvironment;
+            }
+
+            set
+            {
+                NetworkEnvironment = value;
+            }
+        }
 
         /// <summary>
         /// The currently running application

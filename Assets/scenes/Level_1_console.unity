@@ -135,6 +135,11 @@ Prefab:
       propertyPath: Network
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114651705664295012, guid: 6cedd9f7a4cf2794f958bf5ad66c4f2b,
+        type: 2}
+      propertyPath: NetworkEnvironment
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cedd9f7a4cf2794f958bf5ad66c4f2b, type: 2}
   m_IsPrefabParent: 0
