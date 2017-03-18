@@ -57,14 +57,13 @@
 
         protected void DetermineViewportPositionByCursorRow(int cursorRow)
         {
-            // currentLineCount = 100%
-            // cursorRow between 0..currentLineCount
-            // cursorRow / currentLineCount
-
-            // yay!
             int screenRowCount = 18;
 
             float skipPerScroll = 0.02f;
+
+            // we're working here with virtual starting rows,
+            //  because the scrollVerticalPosition is already scaled from 0 to 1 and we can't recover the actual size in pixels from that
+            //  so everytime we scroll down or up we update the virtualScrollStartingRow to get a guestimate of where we are and what's visible
 
             if (cursorRow < previousCursorRow)
             {
@@ -100,15 +99,7 @@
                     }
                 }
             }
-            else
-            {
-                // staying put
-            }
 
-
-            // only scroll when at the bottom... can we do that?
-
-            Debug.Log("scroll vert pos = " + parentOS.ScrollVerticalPosition);
 
             if (previousCursorRow != cursorRow)
             {
