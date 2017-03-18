@@ -162,7 +162,10 @@
             var renderers = GetComponentsInChildren<SpriteRenderer>();
             foreach (var renderer in renderers)
             {
-                renderer.flipX = !CharacterFacingRight;
+                if (!renderer.name.EndsWith("_skybox"))
+                {
+                    renderer.flipX = !CharacterFacingRight;
+                }
             }
         }
     }
