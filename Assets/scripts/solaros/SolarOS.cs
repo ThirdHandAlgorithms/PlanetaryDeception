@@ -23,6 +23,19 @@
 
         public SolarOSNetwork NetworkEnvironment;
 
+        public float ScrollVerticalPosition
+        {
+            get
+            {
+                return ConsoleScrollRect.verticalNormalizedPosition;
+            }
+
+            set
+            {
+                ConsoleScrollRect.verticalNormalizedPosition = value;
+            }
+        }
+
         /// <summary>
         /// Current Network the console is connected to
         /// </summary>

@@ -140,6 +140,12 @@ Prefab:
       propertyPath: NetworkEnvironment
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114673552452352726, guid: 6cedd9f7a4cf2794f958bf5ad66c4f2b,
+        type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: d2239a330685bb047a3f2ce031ffbd4b,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cedd9f7a4cf2794f958bf5ad66c4f2b, type: 2}
   m_IsPrefabParent: 0

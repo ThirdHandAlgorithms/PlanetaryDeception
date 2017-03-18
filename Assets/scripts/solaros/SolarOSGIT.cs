@@ -14,6 +14,12 @@
         /// </summary>
         private List<SolarOSMenuItem> mainMenu;
 
+        private int currentLineCount;
+
+        private int previousCursorRow = 0;
+
+        private int virtualScrollStartingRow = 0;
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -37,11 +43,77 @@
                 description = "select noteworthy lines of code...\n";
             }
 
-            parentOS.SetConsoleText(
+            var FullOutputText =
                 parentOS.OSTxt("vite git repo") +
                 description +
-                MenuOptionsTxt()
-            );
+                MenuOptionsTxt();
+
+            currentLineCount = FullOutputText.Split('\n').Length;
+
+            parentOS.SetConsoleText(FullOutputText);
+
+            DetermineViewportPositionByCursorRow(CursorRow);
+        }
+
+        protected void DetermineViewportPositionByCursorRow(int cursorRow)
+        {
+            // currentLineCount = 100%
+            // cursorRow between 0..currentLineCount
+            // cursorRow / currentLineCount
+
+            // yay!
+            int screenRowCount = 18;
+
+            float skipPerScroll = 0.02f;
+
+            if (cursorRow < previousCursorRow)
+            {
+                // scrolling down
+                if (cursorRow < virtualScrollStartingRow + screenRowCount)
+                {
+                    // actually scroll down
+                    if (parentOS.ScrollVerticalPosition + skipPerScroll < 1.0f)
+                    {
+                        parentOS.ScrollVerticalPosition = parentOS.ScrollVerticalPosition + skipPerScroll;
+                        virtualScrollStartingRow--;
+                    }
+                    else
+                    {
+                        parentOS.ScrollVerticalPosition = 1.0f;
+                    }
+                }
+            }
+            else if (cursorRow > previousCursorRow)
+            {
+                // scrolling up
+                if (cursorRow > virtualScrollStartingRow + screenRowCount)
+                {
+                    // actually scroll down
+                    if (parentOS.ScrollVerticalPosition - skipPerScroll > 0.0f)
+                    {
+                        parentOS.ScrollVerticalPosition = parentOS.ScrollVerticalPosition - skipPerScroll;
+                        virtualScrollStartingRow++;
+                    }
+                    else
+                    {
+                        parentOS.ScrollVerticalPosition = 0.0f;
+                    }
+                }
+            }
+            else
+            {
+                // staying put
+            }
+
+
+            // only scroll when at the bottom... can we do that?
+
+            Debug.Log("scroll vert pos = " + parentOS.ScrollVerticalPosition);
+
+            if (previousCursorRow != cursorRow)
+            {
+                previousCursorRow = cursorRow;
+            }
         }
 
         /// <summary>
