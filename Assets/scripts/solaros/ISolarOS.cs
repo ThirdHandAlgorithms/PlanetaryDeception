@@ -9,6 +9,7 @@
         SolarOSMenuItem SelectedMenuItem { get; set; }
         SolarOSMenuItem CurrentApplication { get; set; }
         SolarOSNetwork Network { get; set; }
+        float ScrollVerticalPosition { get; set; }
 
         void SelectItemWithSameDescription(SolarOSMenuItem reselectItem);
         bool NetworkIsOnVenus();

@@ -14,6 +14,12 @@
         /// </summary>
         private List<SolarOSMenuItem> mainMenu;
 
+        private int currentLineCount;
+
+        private int previousCursorRow = 0;
+
+        private int virtualScrollStartingRow = 0;
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -37,11 +43,68 @@
                 description = "select noteworthy lines of code...\n";
             }
 
-            parentOS.SetConsoleText(
+            var FullOutputText =
                 parentOS.OSTxt("vite git repo") +
                 description +
-                MenuOptionsTxt()
-            );
+                MenuOptionsTxt();
+
+            currentLineCount = FullOutputText.Split('\n').Length;
+
+            parentOS.SetConsoleText(FullOutputText);
+
+            DetermineViewportPositionByCursorRow(CursorRow);
+        }
+
+        protected void DetermineViewportPositionByCursorRow(int cursorRow)
+        {
+            int screenRowCount = 18;
+
+            float skipPerScroll = 0.02f;
+
+            // we're working here with virtual starting rows,
+            //  because the scrollVerticalPosition is already scaled from 0 to 1 and we can't recover the actual size in pixels from that
+            //  so everytime we scroll down or up we update the virtualScrollStartingRow to get a guestimate of where we are and what's visible
+
+            if (cursorRow < previousCursorRow)
+            {
+                // scrolling down
+                if (cursorRow < virtualScrollStartingRow + screenRowCount)
+                {
+                    // actually scroll down
+                    if (parentOS.ScrollVerticalPosition + skipPerScroll < 1.0f)
+                    {
+                        parentOS.ScrollVerticalPosition = parentOS.ScrollVerticalPosition + skipPerScroll;
+                        virtualScrollStartingRow--;
+                    }
+                    else
+                    {
+                        parentOS.ScrollVerticalPosition = 1.0f;
+                    }
+                }
+            }
+            else if (cursorRow > previousCursorRow)
+            {
+                // scrolling up
+                if (cursorRow > virtualScrollStartingRow + screenRowCount)
+                {
+                    // actually scroll down
+                    if (parentOS.ScrollVerticalPosition - skipPerScroll > 0.0f)
+                    {
+                        parentOS.ScrollVerticalPosition = parentOS.ScrollVerticalPosition - skipPerScroll;
+                        virtualScrollStartingRow++;
+                    }
+                    else
+                    {
+                        parentOS.ScrollVerticalPosition = 0.0f;
+                    }
+                }
+            }
+
+
+            if (previousCursorRow != cursorRow)
+            {
+                previousCursorRow = cursorRow;
+            }
         }
 
         /// <summary>

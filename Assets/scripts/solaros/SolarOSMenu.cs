@@ -26,6 +26,11 @@
         public RunApplication OnRunApplication;
 
         /// <summary>
+        /// Actual Application
+        /// </summary>
+        public SolarOSApplication Application;
+
+        /// <summary>
         /// Custom render function for the application
         /// </summary>
         public DisplayApplication OnDisplay;
@@ -43,6 +48,23 @@
         /// <param name="onDisplay"></param>
         public SolarOSMenuItem(string description, RunApplication onRun, DisplayApplication onDisplay)
         {
+            Application = null;
+            Description = description;
+            OnRunApplication = onRun;
+            OnDisplay = onDisplay;
+            IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Supply actual application as well as separate run and display functions
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="application"></param>
+        /// <param name="onRun"></param>
+        /// <param name="onDisplay"></param>
+        public SolarOSMenuItem(string description, SolarOSApplication application, RunApplication onRun, DisplayApplication onDisplay)
+        {
+            Application = application;
             Description = description;
             OnRunApplication = onRun;
             OnDisplay = onDisplay;
@@ -56,6 +78,7 @@
         /// /// <param name="enabled"></param>
         public SolarOSMenuItem(string description, bool enabled = true)
         {
+            Application = null;
             Description = description;
             OnRunApplication = null;
             OnDisplay = null;
@@ -69,6 +92,7 @@
         /// <param name="application"></param>
         public SolarOSMenuItem(string description, SolarOSApplication application)
         {
+            Application = application;
             Description = description;
             OnRunApplication = application.Run;
             OnDisplay = application.RefreshDisplay;

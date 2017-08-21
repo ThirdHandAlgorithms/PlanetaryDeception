@@ -120,6 +120,8 @@
         /// <returns>string</returns>
         protected override string MenuOptionsTxt()
         {
+            int rowIdx = 0;
+
             if (IsInMainMenu())
             {
                 return base.MenuOptionsTxt();
@@ -137,11 +139,15 @@
                     else if (parentOS.SelectedMenuItem == menuItem)
                     {
                         menuOptions += "[x] " + menuItem.Description + "\n";
+
+                        CursorRow = rowIdx;
                     }
                     else
                     {
                         menuOptions += "[ ] " + menuItem.Description + "\n";
                     }
+
+                    rowIdx++;
                 }
 
                 return menuOptions;

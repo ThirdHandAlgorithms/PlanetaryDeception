@@ -10,6 +10,8 @@
         /// </summary>
         protected ISolarOS parentOS;
 
+        public int CursorRow { get; set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -17,6 +19,7 @@
         public SolarOSApplication(ISolarOS os)
         {
             parentOS = os;
+            CursorRow = 0;
         }
 
         /// <summary>
@@ -45,12 +48,14 @@
         protected virtual string MenuOptionsTxt()
         {
             string menuOptions = string.Empty;
+            int rowIdx = 0;
 
             foreach (var menuItem in parentOS.MenuItems)
             {
                 if (menuItem == parentOS.SelectedMenuItem)
                 {
                     menuOptions += "[x]";
+                    CursorRow = rowIdx;
                 }
                 else
                 {
@@ -58,6 +63,8 @@
                 }
 
                 menuOptions += " " + menuItem.Description + "\n";
+
+                rowIdx++;
             }
 
             return menuOptions;
