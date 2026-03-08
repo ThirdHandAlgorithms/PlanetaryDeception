@@ -22,7 +22,10 @@
         StationTransportTicketDome5,
         StationTransportTicketDome6,
         StationTransportTicketDome7,
-        StationTransportTicketDome8
+        StationTransportTicketDome8,
+        PinkRoses,
+        RedRoses,
+        FlowershopVisited
     }
 
     /// <summary>
@@ -58,6 +61,9 @@
             Add(new ItemTag(KnownItem.StationTransportTicketDome6, ItemClassType.Ticket, "Ticket: Station Transport to Dome 6"));
             Add(new ItemTag(KnownItem.StationTransportTicketDome7, ItemClassType.Ticket, "Ticket: Station Transport to Dome 7"));
             Add(new ItemTag(KnownItem.StationTransportTicketDome8, ItemClassType.Ticket, "Ticket: Station Transport to Dome 8"));
+            Add(new ItemTag(KnownItem.PinkRoses, ItemClassType.Trash, "Pink Roses"));
+            Add(new ItemTag(KnownItem.RedRoses, ItemClassType.Trash, "Red Roses"));
+            Add(new ItemTag(KnownItem.FlowershopVisited, ItemClassType.Hidden, string.Empty));
         }
 
         /// <summary>

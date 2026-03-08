@@ -134,6 +134,27 @@
         }
 
         /// <summary>
+        /// Returns all item IDs in this inventory
+        /// </summary>
+        public List<KnownItem> GetItemIds()
+        {
+            var ids = new List<KnownItem>();
+            foreach (var item in items)
+            {
+                ids.Add(item.ItemID);
+            }
+            return ids;
+        }
+
+        /// <summary>
+        /// Clears all items from this inventory
+        /// </summary>
+        public void Clear()
+        {
+            items.Clear();
+        }
+
+        /// <summary>
         /// Gets the ItemTag for a given ItemID if it's in the Inventory, otherwise null is returned
         /// </summary>
         /// <param name="itemId">int</param>

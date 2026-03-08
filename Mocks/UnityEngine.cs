@@ -2,8 +2,8 @@
 {
     public class Color
     {
-        private float r, g, b;
-        
+        public float r, g, b;
+
         public Color(float r, float g, float b)
         {
             this.r = r;
@@ -41,10 +41,20 @@
             return false;
         }
 
+        public static bool GetButton(string buttonname)
+        {
+            return false;
+        }
+
         public static bool GetButtonUp(string buttonname)
         {
             return false;
         }
+    }
+
+    public class CanvasGroup
+    {
+        public float alpha { get; set; }
     }
 
     public class GameObject
@@ -72,8 +82,42 @@
         public bool flipX, flipY;
     }
 
+    public class TextAsset
+    {
+        public string text { get; set; }
+    }
+
+    public static class Resources
+    {
+        public static string BasePath { get; set; } = "Assets/resources";
+
+        public static object Load(string name)
+        {
+            var path = System.IO.Path.Combine(BasePath, name + ".txt");
+            if (System.IO.File.Exists(path))
+            {
+                return new TextAsset { text = System.IO.File.ReadAllText(path) };
+            }
+
+            return new TextAsset { text = string.Empty };
+        }
+    }
+
+    public static class Application
+    {
+        public static string persistentDataPath
+        {
+            get { return System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), ".PlanetaryDeception"); }
+        }
+    }
+
     public class MonoBehaviour
     {
         public GameObject gameObject { get; set; }
+
+        public T GetComponent<T>() where T : new()
+        {
+            return new T();
+        }
     }
 }

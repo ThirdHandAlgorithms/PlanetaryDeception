@@ -1,10 +1,15 @@
-﻿namespace PlanetaryDeception
+namespace PlanetaryDeception
 {
     /// <summary>
     /// The player's wallet
     /// </summary>
     public class PlayerWallet : SolarbitsWallet
     {
+        /// <summary>
+        /// Default starting amount for new games
+        /// </summary>
+        public const int StartingAmount = 500;
+
         /// <summary>
         /// singleton instance
         /// </summary>
@@ -19,9 +24,7 @@
             if (thisInstance == null)
             {
                 thisInstance = new PlayerWallet();
-
-                // todo: load from SaveGame or initialize to 500 on NewGame
-                thisInstance.Add(500);
+                thisInstance.Add(StartingAmount);
             }
 
             return thisInstance;

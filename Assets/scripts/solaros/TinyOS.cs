@@ -9,7 +9,7 @@
     /// <summary>
     /// Tiny OS for QnA's
     /// </summary>
-    public class TinyOS : SolarOS
+    public class TinyOS : SolarOS, IDialogConsole
     {
         /// <summary>
         /// Currently active question
@@ -47,6 +47,11 @@
         public void AddPossibleAnswer(string answer, RunApplication onAnswer)
         {
             MenuItems.Add(new SolarOSMenuItem(answer, onAnswer, RefreshDisplay));
+        }
+
+        public void AddPossibleAnswer(string answer, Action onAnswer)
+        {
+            AddPossibleAnswer(answer, new RunApplication(onAnswer));
         }
 
         public void Clear()

@@ -192,7 +192,7 @@
         {
             var playerWallet = PlayerWallet.Instance();
             var ticketprice = 100;
-            if (playerInventory.ContainsItem(KnownItem.VenrefInterrogated) && (playerWallet.GetAmount() >= ticketprice))
+            if (playerInventory.ContainsItem(KnownItem.CeresInvitation) && (playerWallet.GetAmount() >= ticketprice))
             {
                 parentOS.MenuItems.Add(
                     new SolarOSMenuItem(

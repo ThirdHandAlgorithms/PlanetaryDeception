@@ -110,6 +110,22 @@
         }
 
         /// <summary>
+        /// Returns all known scenes
+        /// </summary>
+        public Dictionary<string, SceneSettings> GetKnownScenes()
+        {
+            return knownScenes;
+        }
+
+        /// <summary>
+        /// Sets known scenes from save data
+        /// </summary>
+        public void SetKnownScenes(Dictionary<string, SceneSettings> scenes)
+        {
+            knownScenes = scenes;
+        }
+
+        /// <summary>
         /// Singleton
         /// </summary>
         /// <returns>CharacterSettings</returns>

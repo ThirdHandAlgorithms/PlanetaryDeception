@@ -46,14 +46,13 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "Not enough solarbits")]
         public void TransferMoreThanYouHave()
         {
             var wallet = new SolarbitsWallet();
             wallet.Add(123);
 
             var destinationWallet = new SolarbitsWallet();
-            wallet.Transfer(124, destinationWallet);
+            Assert.ThrowsExactly<Exception>(() => wallet.Transfer(124, destinationWallet));
         }
     }
 }

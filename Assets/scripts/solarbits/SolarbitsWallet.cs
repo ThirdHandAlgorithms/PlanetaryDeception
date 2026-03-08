@@ -46,6 +46,15 @@
         }
 
         /// <summary>
+        /// Sets the amount directly (for save/load)
+        /// </summary>
+        /// <param name="newAmount"></param>
+        public void SetAmount(int newAmount)
+        {
+            amount = newAmount;
+        }
+
+        /// <summary>
         /// Returns the total amount of bits in this wallet
         /// </summary>
         /// <returns>int</returns>
